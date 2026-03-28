@@ -3,104 +3,108 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ARBI.WATCH — 김프·아비트라지 실시간 분석</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<title>ARBI.WATCH — 김프·아비트라지 실시간</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#07070d;--bg2:#0e0e18;--bg3:#151522;--bg4:#1e1e2e;--bg5:#252538;
-  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.11);
-  --text:#eeeef8;--text2:#8888a8;--text3:#444460;
-  --green:#00e676;--green-bg:rgba(0,230,118,0.08);--green-bd:rgba(0,230,118,0.2);
-  --red:#ff3355;--red-bg:rgba(255,51,85,0.08);--red-bd:rgba(255,51,85,0.2);
-  --yellow:#ffd600;--yellow-bg:rgba(255,214,0,0.08);--yellow-bd:rgba(255,214,0,0.2);
-  --blue:#3d8eff;--blue-bg:rgba(61,142,255,0.08);--blue-bd:rgba(61,142,255,0.2);
-  --purple:#a78bfa;--purple-bg:rgba(167,139,250,0.08);--purple-bd:rgba(167,139,250,0.2);
-  --accent:#6c5ce7;--accent2:#a78bfa;
-  --mono:'Space Mono',monospace;--sans:'Noto Sans KR',sans-serif;
+  --bg:#060610;--bg2:#0c0c1c;--bg3:#121228;--bg4:#1a1a35;--bg5:#22224a;
+  --border:rgba(120,120,255,0.08);--border2:rgba(120,120,255,0.15);
+  --text:#e8e8ff;--text2:#7878aa;--text3:#3a3a6a;
+  --green:#00ff88;--green-d:#00cc66;--green-bg:rgba(0,255,136,0.07);--green-bd:rgba(0,255,136,0.18);
+  --red:#ff3366;--red-bg:rgba(255,51,102,0.07);--red-bd:rgba(255,51,102,0.18);
+  --yellow:#ffcc00;--yellow-bg:rgba(255,204,0,0.07);--yellow-bd:rgba(255,204,0,0.18);
+  --blue:#4488ff;--blue-bg:rgba(68,136,255,0.07);--blue-bd:rgba(68,136,255,0.18);
+  --purple:#aa88ff;--purple-bg:rgba(170,136,255,0.07);--purple-bd:rgba(170,136,255,0.18);
+  --accent:#6655ff;--accent2:#aa88ff;
+  --mono:'IBM Plex Mono',monospace;--sans:'Noto Sans KR',sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;min-height:100vh;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;min-height:100vh;overflow-x:hidden;}
 ::-webkit-scrollbar{width:3px;height:3px;}
-::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--bg5);border-radius:2px;}
 
-.header{position:sticky;top:0;z-index:300;background:rgba(7,7,13,0.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);padding:0 20px;height:52px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
-.logo{font-family:var(--mono);font-size:14px;font-weight:700;letter-spacing:.08em;display:flex;align-items:center;gap:8px;}
-.logo-icon{width:24px;height:24px;background:var(--accent);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:700;}
-.logo-text{background:linear-gradient(135deg,#a78bfa,#6c5ce7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.live-pill{display:flex;align-items:center;gap:5px;background:var(--green-bg);border:1px solid var(--green-bd);border-radius:20px;padding:3px 9px;font-size:10px;font-family:var(--mono);color:var(--green);}
+/* ── 헤더 ── */
+.header{position:sticky;top:0;z-index:500;background:rgba(6,6,16,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border2);padding:0 16px;height:50px;display:flex;align-items:center;gap:12px;}
+.logo{font-family:var(--mono);font-size:15px;font-weight:700;letter-spacing:.06em;display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.logo-mark{background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:6px;padding:3px 7px;font-size:12px;color:#fff;}
+.logo-name{background:linear-gradient(90deg,var(--accent2),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.live-pill{display:flex;align-items:center;gap:4px;background:var(--green-bg);border:1px solid var(--green-bd);border-radius:20px;padding:2px 8px;font-size:10px;font-family:var(--mono);color:var(--green);flex-shrink:0;}
 .live-dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:blink 1.5s infinite;}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
-.hmid{display:flex;align-items:center;gap:6px;flex:1;justify-content:center;flex-wrap:wrap;}
-.hstat{font-family:var(--mono);font-size:11px;color:var(--text2);background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:3px 8px;white-space:nowrap;}
-.hstat b{color:var(--text);}
-.hright{display:flex;align-items:center;gap:8px;}
-.cur-toggle{display:flex;background:var(--bg3);border:1px solid var(--border);border-radius:6px;overflow:hidden;}
-.cur-btn{padding:4px 11px;font-size:11px;font-family:var(--mono);cursor:pointer;color:var(--text3);background:transparent;border:none;transition:all .15s;}
-.cur-btn.active{background:var(--accent);color:#fff;}
-#upd{font-size:10px;color:var(--text3);font-family:var(--mono);white-space:nowrap;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
+.header-stats{display:flex;align-items:center;gap:6px;flex:1;justify-content:center;flex-wrap:nowrap;overflow:hidden;}
+.hs{font-family:var(--mono);font-size:11px;color:var(--text2);background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:3px 7px;white-space:nowrap;display:flex;align-items:center;gap:4px;}
+.hs b{font-weight:700;}
+.hs .pos{color:var(--green);}
+.hs .neg{color:var(--red);}
+.hs .neu{color:var(--text);}
+.header-right{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.cur-toggle{display:flex;background:var(--bg3);border:1px solid var(--border);border-radius:5px;overflow:hidden;}
+.cur-btn{padding:4px 10px;font-size:11px;font-family:var(--mono);cursor:pointer;color:var(--text3);background:transparent;border:none;transition:all .15s;}
+.cur-btn.on{background:var(--accent);color:#fff;}
+#upd-time{font-size:10px;color:var(--text3);font-family:var(--mono);}
 
-.alert-bar{background:linear-gradient(90deg,rgba(255,214,0,.1),transparent);border-bottom:1px solid var(--yellow-bd);padding:8px 20px;font-size:12px;color:var(--yellow);display:flex;align-items:center;gap:8px;}
+/* ── 경보 배너 ── */
+.alert-bar{padding:7px 16px;font-size:12px;display:flex;align-items:center;gap:8px;animation:slideDown .3s ease;}
+@keyframes slideDown{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
 .alert-bar.hidden{display:none;}
+.alert-bar.kimp{background:linear-gradient(90deg,rgba(255,204,0,.12),transparent);border-bottom:1px solid var(--yellow-bd);color:var(--yellow);}
+.alert-bar.listing{background:linear-gradient(90deg,rgba(255,51,102,.12),transparent);border-bottom:1px solid var(--red-bd);color:var(--red);}
 
-.nav{display:flex;border-bottom:1px solid var(--border);padding:0 20px;background:var(--bg2);overflow-x:auto;}
-.nav-tab{padding:11px 18px;font-size:13px;cursor:pointer;color:var(--text3);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s;white-space:nowrap;display:flex;align-items:center;gap:6px;}
-.nav-tab:hover{color:var(--text2);}
-.nav-tab.active{color:var(--text);border-bottom-color:var(--accent2);font-weight:500;}
-.tab-badge{background:var(--red-bg);border:1px solid var(--red-bd);color:var(--red);font-size:10px;font-family:var(--mono);padding:1px 5px;border-radius:10px;}
-.tab-panel{display:none;padding:20px;}
-.tab-panel.active{display:block;}
+/* ── 탭 네비 ── */
+.nav{display:flex;background:var(--bg2);border-bottom:1px solid var(--border2);padding:0 16px;overflow-x:auto;gap:0;-webkit-overflow-scrolling:touch;}
+.nav::-webkit-scrollbar{height:0;}
+.ntab{padding:10px 16px;font-size:12px;font-weight:500;cursor:pointer;color:var(--text3);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s;white-space:nowrap;display:flex;align-items:center;gap:5px;flex-shrink:0;}
+.ntab:hover{color:var(--text2);}
+.ntab.on{color:var(--text);border-bottom-color:var(--accent2);}
+.nbadge{background:var(--red-bg);border:1px solid var(--red-bd);color:var(--red);font-size:9px;font-family:var(--mono);padding:1px 5px;border-radius:10px;font-weight:700;}
+.nbadge.green{background:var(--green-bg);border-color:var(--green-bd);color:var(--green);}
+.tab-panel{display:none;padding:14px 16px;animation:fadeIn .15s ease;}
+.tab-panel.on{display:block;}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
-/* 로딩 */
-.loading-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;gap:16px;}
-.loading-spinner{width:32px;height:32px;border:2px solid var(--bg4);border-top-color:var(--accent2);border-radius:50%;animation:spin .8s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg)}}
-.loading-text{font-family:var(--mono);font-size:12px;color:var(--text3);}
-.loading-progress{font-family:var(--mono);font-size:11px;color:var(--accent2);}
+/* ── 요약 통계 바 ── */
+.stat-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.sb{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;flex:1;min-width:110px;}
+.sb-label{font-size:10px;color:var(--text3);font-family:var(--mono);letter-spacing:.05em;margin-bottom:4px;}
+.sb-val{font-size:18px;font-weight:700;font-family:var(--mono);}
+.sb-sub{font-size:10px;color:var(--text3);margin-top:2px;}
+.sb.hot{border-color:var(--yellow-bd);}
 
-/* 전략 헤더 */
-.strategy-header{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
-.strategy-title{display:flex;align-items:center;gap:10px;}
-.strategy-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;}
-.strategy-name{font-size:15px;font-weight:700;}
-.strategy-desc{font-size:12px;color:var(--text2);margin-top:2px;}
-.strategy-stats{display:flex;gap:16px;flex-wrap:wrap;}
-.sstat{text-align:center;}
-.sstat-val{font-size:18px;font-weight:700;font-family:var(--mono);}
-.sstat-label{font-size:10px;color:var(--text3);margin-top:2px;}
+/* ── 필터 바 ── */
+.fbar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:12px;padding:8px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;}
+.fl{font-size:10px;color:var(--text3);font-family:var(--mono);white-space:nowrap;}
+.fb{padding:3px 9px;font-size:10px;font-family:var(--mono);border:1px solid var(--border2);border-radius:20px;cursor:pointer;color:var(--text2);background:transparent;transition:all .12s;}
+.fb:hover{border-color:var(--accent2);color:var(--accent2);}
+.fb.on{background:rgba(102,85,255,.15);border-color:var(--accent2);color:var(--accent2);}
+.fi{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:3px 7px;font-size:11px;color:var(--text);font-family:var(--mono);outline:none;width:58px;}
+.fi:focus{border-color:var(--accent2);}
+.fsearch{background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:4px 9px;font-size:12px;color:var(--text);outline:none;width:140px;font-family:var(--sans);}
+.fsearch::placeholder{color:var(--text3);}
+.fsearch:focus{border-color:var(--accent2);}
 
-.fbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:14px;padding:10px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;}
-.flabel{font-size:10px;color:var(--text3);font-family:var(--mono);white-space:nowrap;}
-.fbtn{padding:3px 9px;font-size:11px;font-family:var(--mono);border:1px solid var(--border2);border-radius:4px;cursor:pointer;color:var(--text2);background:transparent;transition:all .15s;}
-.fbtn:hover{border-color:var(--accent2);color:var(--text);}
-.fbtn.active{background:rgba(108,92,231,.15);border-color:var(--accent2);color:var(--accent2);}
-.fbtn.pill{border-radius:20px;}
-.finput{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:3px 8px;font-size:11px;color:var(--text);width:60px;font-family:var(--mono);outline:none;}
-.finput:focus{border-color:var(--accent2);}
-.search-box{background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:4px 10px;font-size:12px;color:var(--text);outline:none;width:160px;font-family:var(--sans);}
-.search-box::placeholder{color:var(--text3);}
-.search-box:focus{border-color:var(--accent2);}
+/* ── 섹션 헤더 ── */
+.sec-hd{font-size:10px;font-family:var(--mono);color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.sec-cnt{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:1px 7px;font-size:10px;color:var(--text2);}
 
-.sec{font-size:10px;font-family:var(--mono);color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.sec-count{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:1px 7px;font-size:10px;color:var(--text2);}
-
-.tw{overflow-x:auto;border:1px solid var(--border);border-radius:10px;background:var(--bg2);margin-bottom:16px;}
+/* ── 테이블 ── */
+.tw{overflow-x:auto;border:1px solid var(--border);border-radius:10px;background:var(--bg2);margin-bottom:12px;}
 table{width:100%;border-collapse:collapse;font-size:12px;}
-th{text-align:left;padding:9px 12px;font-size:10px;font-family:var(--mono);font-weight:400;color:var(--text3);letter-spacing:.07em;text-transform:uppercase;border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none;}
+th{padding:8px 11px;font-size:9px;font-family:var(--mono);font-weight:600;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none;text-align:left;}
 th:hover{color:var(--text2);}
 th.r,td.r{text-align:right;}
 th.c,td.c{text-align:center;}
-td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:middle;white-space:nowrap;}
+td{padding:8px 11px;border-bottom:1px solid var(--border);vertical-align:middle;white-space:nowrap;}
 tr:last-child td{border-bottom:none;}
-tr:hover td{background:rgba(255,255,255,.02);}
-.coin-cell{display:flex;align-items:center;gap:8px;}
-.coin-icon{width:26px;height:26px;border-radius:50%;background:var(--bg4);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:9px;font-family:var(--mono);font-weight:700;color:var(--accent2);flex-shrink:0;}
+tr:hover td{background:rgba(102,85,255,.04);}
+.cc{display:flex;align-items:center;gap:7px;}
+.ci{width:24px;height:24px;border-radius:50%;background:var(--bg4);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:8px;font-family:var(--mono);font-weight:700;color:var(--accent2);flex-shrink:0;}
 .cn{font-weight:700;font-size:12px;font-family:var(--mono);}
-.cs{font-size:10px;color:var(--text3);margin-top:1px;}
+.csub{font-size:9px;color:var(--text3);margin-top:1px;}
 .pv{font-family:var(--mono);font-size:12px;font-weight:700;}
-.ps{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:1px;}
-.na{color:var(--text3);font-size:11px;font-family:var(--mono);}
+.psub{font-family:var(--mono);font-size:9px;color:var(--text3);margin-top:1px;}
+.na{color:var(--text3);font-size:10px;font-family:var(--mono);}
 
+/* ── 배지 ── */
 .badge{display:inline-flex;align-items:center;padding:2px 6px;border-radius:3px;font-size:10px;font-family:var(--mono);font-weight:700;}
 .bg{background:var(--green-bg);border:1px solid var(--green-bd);color:var(--green);}
 .br{background:var(--red-bg);border:1px solid var(--red-bd);color:var(--red);}
@@ -109,195 +113,294 @@ tr:hover td{background:rgba(255,255,255,.02);}
 .bp{background:var(--purple-bg);border:1px solid var(--purple-bd);color:var(--purple);}
 .bn{background:var(--bg3);border:1px solid var(--border);color:var(--text3);}
 
-.gbar{display:flex;align-items:center;gap:4px;margin-top:2px;}
-.gbar-bg{width:40px;height:3px;background:var(--bg4);border-radius:2px;overflow:hidden;}
-.gbar-fill{height:100%;border-radius:2px;transition:width .5s;}
+/* ── 갭 바 ── */
+.gw{display:flex;align-items:center;gap:4px;margin-top:2px;}
+.gbg{width:36px;height:3px;background:var(--bg5);border-radius:2px;overflow:hidden;}
+.gfill{height:100%;border-radius:2px;transition:width .4s;}
 
-.sgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:18px;}
-.sc{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px;}
-.sc.hot{border-color:var(--yellow-bd);}
-.sl{font-size:10px;color:var(--text3);font-family:var(--mono);letter-spacing:.05em;margin-bottom:6px;}
-.sv{font-size:20px;font-weight:700;font-family:var(--mono);}
-.ss{font-size:10px;color:var(--text3);margin-top:3px;}
+/* ── 원상따리 카드 ── */
+.listing-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin-bottom:14px;}
+.lcard{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px;transition:all .2s;cursor:pointer;position:relative;overflow:hidden;}
+.lcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent2),transparent);opacity:0;transition:opacity .3s;}
+.lcard:hover::before{opacity:1;}
+.lcard:hover{border-color:var(--border2);}
+.lcard.pending{border-color:var(--red-bd);}
+.lcard.pending::before{opacity:1;background:linear-gradient(90deg,transparent,var(--red),transparent);}
+.lcard.hot{border-color:var(--yellow-bd);}
+.lcard.hot::before{opacity:1;background:linear-gradient(90deg,transparent,var(--yellow),transparent);}
+.lc-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px;}
+.lc-coin{font-size:15px;font-weight:700;font-family:var(--mono);}
+.lc-ex{font-size:9px;color:var(--text3);margin-top:2px;}
+.lc-prices{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
+.lc-p{background:var(--bg3);border-radius:4px;padding:5px 7px;}
+.lc-pl{font-size:9px;color:var(--text3);margin-bottom:2px;}
+.lc-pv{font-size:11px;font-weight:700;font-family:var(--mono);}
 
-/* 페이지네이션 */
-.pagination{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;border-top:1px solid var(--border);}
-.pg-btn{padding:4px 10px;font-size:11px;font-family:var(--mono);border:1px solid var(--border2);border-radius:4px;cursor:pointer;color:var(--text2);background:transparent;transition:all .15s;}
+/* ── 펀비 바 ── */
+.fbar-mini{display:flex;align-items:center;gap:5px;margin-top:2px;}
+.fbmini-bg{width:50px;height:4px;background:var(--bg5);border-radius:2px;overflow:hidden;}
+.fbmini-fill{height:100%;border-radius:2px;}
+
+/* ── 페이지네이션 ── */
+.pg{display:flex;align-items:center;justify-content:center;gap:5px;padding:12px;flex-wrap:wrap;}
+.pg-btn{padding:3px 9px;font-size:10px;font-family:var(--mono);border:1px solid var(--border2);border-radius:4px;cursor:pointer;color:var(--text2);background:transparent;transition:all .12s;}
 .pg-btn:hover{border-color:var(--accent2);color:var(--accent2);}
-.pg-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
-.pg-btn:disabled{opacity:.3;cursor:not-allowed;}
-.pg-info{font-size:11px;color:var(--text3);font-family:var(--mono);}
+.pg-btn.on{background:var(--accent);border-color:var(--accent);color:#fff;}
+.pg-btn:disabled{opacity:.25;cursor:not-allowed;}
+.pg-info{font-size:10px;color:var(--text3);font-family:var(--mono);}
 
-/* AI */
-.aiw{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px;}
-.aichat{min-height:120px;max-height:300px;overflow-y:auto;margin-bottom:14px;display:flex;flex-direction:column;gap:8px;}
-.amu{background:rgba(108,92,231,.12);border:1px solid rgba(108,92,231,.2);border-radius:8px;padding:9px 13px;font-size:13px;align-self:flex-end;max-width:85%;}
-.amb{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:9px 13px;font-size:13px;line-height:1.7;}
-.aml{color:var(--text3);font-size:12px;font-family:var(--mono);}
-.airow{display:flex;gap:8px;}
-.aiinp{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:9px 13px;font-size:13px;color:var(--text);font-family:var(--sans);outline:none;}
+/* ── 로딩 ── */
+.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:50px;gap:12px;}
+.spinner{width:28px;height:28px;border:2px solid var(--bg5);border-top-color:var(--accent2);border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-txt{font-family:var(--mono);font-size:11px;color:var(--text3);}
+
+/* ── AI ── */
+.aiw{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px;}
+.aichat{min-height:100px;max-height:280px;overflow-y:auto;margin-bottom:12px;display:flex;flex-direction:column;gap:7px;}
+.amu{background:rgba(102,85,255,.12);border:1px solid rgba(102,85,255,.2);border-radius:8px;padding:8px 12px;font-size:13px;align-self:flex-end;max-width:88%;}
+.amb{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:13px;line-height:1.7;}
+.aml{color:var(--text3);font-size:11px;font-family:var(--mono);}
+.airow{display:flex;gap:7px;}
+.aiinp{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:8px 12px;font-size:13px;color:var(--text);font-family:var(--sans);outline:none;}
 .aiinp:focus{border-color:var(--accent2);}
 .aiinp::placeholder{color:var(--text3);}
-.aisend{background:var(--accent);border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:500;color:#fff;cursor:pointer;}
-.qbtns{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
-.qbtn{background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:5px 11px;font-size:11px;color:var(--text2);cursor:pointer;}
+.aisend{background:var(--accent);border:none;border-radius:7px;padding:8px 16px;font-size:12px;font-weight:500;color:#fff;cursor:pointer;}
+.qbtns{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px;}
+.qbtn{background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:4px 10px;font-size:11px;color:var(--text2);cursor:pointer;}
 .qbtn:hover{border-color:var(--accent2);color:var(--accent2);}
 
-.footer{padding:14px 20px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:10px;color:var(--text3);font-family:var(--mono);flex-wrap:wrap;gap:6px;background:var(--bg2);}
+/* ── 푸터 ── */
+.footer{padding:12px 16px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:10px;color:var(--text3);font-family:var(--mono);flex-wrap:wrap;gap:5px;background:var(--bg2);}
 
-@media(max-width:680px){
-  .header{padding:0 12px;}.hmid{display:none;}
-  .nav-tab{padding:10px 12px;font-size:12px;}
+@media(max-width:600px){
+  .header-stats .hs:nth-child(n+4){display:none;}
+  .ntab{padding:9px 12px;font-size:11px;}
   .tab-panel{padding:12px;}
   th,td{padding:7px 9px;}
+  .listing-grid{grid-template-columns:1fr 1fr;}
+  .stat-bar .sb{min-width:calc(50% - 4px);}
 }
 </style>
 </head>
 <body>
 
+<!-- 헤더 -->
 <div class="header">
-  <div style="display:flex;align-items:center;gap:10px;">
-    <div class="logo"><div class="logo-icon">A</div><span class="logo-text">ARBI.WATCH</span></div>
-    <div class="live-pill"><span class="live-dot"></span>LIVE</div>
+  <div class="logo">
+    <span class="logo-mark">A</span>
+    <span class="logo-name">ARBI.WATCH</span>
   </div>
-  <div class="hmid">
-    <div class="hstat">BTC <b id="h-btc">-</b></div>
-    <div class="hstat">ETH <b id="h-eth">-</b></div>
-    <div class="hstat">BTC 김프 <b id="h-kimp">-</b></div>
-    <div class="hstat">USD/KRW <b id="h-rate">-</b></div>
-    <div class="hstat">모니터링 <b id="h-count">-</b>코인</div>
+  <div class="live-pill"><span class="live-dot"></span>LIVE</div>
+  <div class="header-stats">
+    <div class="hs">BTC <b id="h-btc" class="neu">-</b></div>
+    <div class="hs">김프 <b id="h-kimp" class="neu">-</b></div>
+    <div class="hs">USDT <b id="h-usdt" class="neu">-</b>원</div>
+    <div class="hs">환율 <b id="h-rate" class="neu">-</b></div>
+    <div class="hs">모니터링 <b id="h-cnt" class="neu">-</b>종</div>
   </div>
-  <div class="hright">
+  <div class="header-right">
     <div class="cur-toggle">
-      <button class="cur-btn active" onclick="setCur('usd')">USD</button>
+      <button class="cur-btn on" onclick="setCur('usd')">USD</button>
       <button class="cur-btn" onclick="setCur('krw')">KRW</button>
     </div>
-    <span id="upd">로딩중...</span>
+    <span id="upd-time">--:--</span>
   </div>
 </div>
 
-<div class="alert-bar hidden" id="alert-bar"><span>⚡</span><span id="alert-text"></span></div>
+<!-- 경보 배너 -->
+<div class="alert-bar kimp hidden" id="alert-kimp"><span>⚡</span><span id="alert-kimp-txt"></span></div>
+<div class="alert-bar listing hidden" id="alert-listing"><span>🚀</span><span id="alert-listing-txt"></span></div>
 
+<!-- 탭 네비 -->
 <div class="nav">
-  <div class="nav-tab active" onclick="sw('kimp')">🥟 김프매매 <span class="tab-badge" id="badge-kimp">-</span></div>
-  <div class="nav-tab" onclick="sw('funding')">📊 펀비매매 <span class="tab-badge" id="badge-fund">-</span></div>
-  <div class="nav-tab" onclick="sw('arb')">⚡ 전체 아비트라지</div>
-  <div class="nav-tab" onclick="sw('ai')">🤖 AI 비서</div>
+  <div class="ntab on" onclick="sw('kimp')">🥟 김프매매 <span class="nbadge" id="b-kimp">-</span></div>
+  <div class="ntab" onclick="sw('listing')">🚀 원상따리 <span class="nbadge" id="b-listing">-</span></div>
+  <div class="ntab" onclick="sw('gap')">📐 갭매매 <span class="nbadge green" id="b-gap">-</span></div>
+  <div class="ntab" onclick="sw('funding')">📊 펀비매매 <span class="nbadge green" id="b-fund">-</span></div>
+  <div class="ntab" onclick="sw('all')">🔍 전체비교</div>
+  <div class="ntab" onclick="sw('ai')">🤖 AI비서</div>
 </div>
 
-<!-- 김프매매 탭 -->
-<div id="tab-kimp" class="tab-panel active">
-  <div class="strategy-header">
-    <div class="strategy-title">
-      <div class="strategy-icon" style="background:rgba(255,214,0,.12);">🥟</div>
-      <div>
-        <div class="strategy-name">김프매매</div>
-        <div class="strategy-desc">업비트·빗썸 상장 전체 코인 vs 해외거래소 실시간 가격차 비교</div>
-      </div>
-    </div>
-    <div class="strategy-stats">
-      <div class="sstat"><div class="sstat-val" id="kp-avg" style="color:var(--yellow)">-</div><div class="sstat-label">평균 김프(업비트)</div></div>
-      <div class="sstat"><div class="sstat-val" id="kp-max" style="color:var(--red)">-</div><div class="sstat-label">최대 김프</div></div>
-      <div class="sstat"><div class="sstat-val" id="kp-neg" style="color:var(--blue)">-</div><div class="sstat-label">역프 코인</div></div>
-      <div class="sstat"><div class="sstat-val" id="kp-opp" style="color:var(--green)">-</div><div class="sstat-label">2%+ 기회</div></div>
-    </div>
-  </div>
+<!-- ① 김프매매 -->
+<div id="tab-kimp" class="tab-panel on">
+  <div class="stat-bar" id="kimp-stats"></div>
   <div class="fbar">
-    <span class="flabel">기준 국내거래소:</span>
-    <button class="fbtn pill active" id="ex-upbit" onclick="setBaseEx('upbit')">업비트</button>
-    <button class="fbtn pill" id="ex-bithumb" onclick="setBaseEx('bithumb')">빗썸</button>
-    <button class="fbtn pill" id="ex-coinone" onclick="setBaseEx('coinone')">코인원</button>
-    <span class="flabel" style="margin-left:8px;">비교 해외거래소:</span>
-    <button class="fbtn pill active" onclick="toggleCmpEx(this,'binance')">Binance</button>
-    <button class="fbtn pill active" onclick="toggleCmpEx(this,'okx')">OKX</button>
-    <button class="fbtn pill active" onclick="toggleCmpEx(this,'bybit')">Bybit</button>
-    <button class="fbtn pill active" onclick="toggleCmpEx(this,'gateio')">Gate.io</button>
-    <button class="fbtn pill active" onclick="toggleCmpEx(this,'mexc')">MEXC</button>
-    <span class="flabel" style="margin-left:8px;">최소 갭:</span>
-    <input class="finput" type="number" id="kimp-min" value="0.5" step="0.1" min="0" oninput="renderKimp()">
-    <span class="flabel">%</span>
-    <span class="flabel" style="margin-left:8px;">검색:</span>
-    <input class="search-box" id="kimp-search" placeholder="코인 검색..." oninput="renderKimp()" style="width:120px;">
+    <span class="fl">기준국내:</span>
+    <button class="fb on" id="bex-upbit" onclick="setBase('upbit')">업비트</button>
+    <button class="fb" id="bex-bithumb" onclick="setBase('bithumb')">빗썸</button>
+    <button class="fb" id="bex-coinone" onclick="setBase('coinone')">코인원</button>
+    <span class="fl" style="margin-left:6px;">비교해외:</span>
+    <button class="fb on" onclick="togCmp(this,'binance')">Binance</button>
+    <button class="fb on" onclick="togCmp(this,'okx')">OKX</button>
+    <button class="fb on" onclick="togCmp(this,'bybit')">Bybit</button>
+    <button class="fb on" onclick="togCmp(this,'gateio')">Gate.io</button>
+    <button class="fb on" onclick="togCmp(this,'mexc')">MEXC</button>
+    <span class="fl" style="margin-left:6px;">최소:</span>
+    <input class="fi" type="number" id="kimp-min" value="0.3" step="0.1" oninput="renderKimp()">
+    <span class="fl">%</span>
+    <input class="fsearch" id="kimp-q" placeholder="코인 검색..." oninput="renderKimp()">
   </div>
-  <div class="sec">실시간 김프 현황 <span class="sec-count" id="kimp-count">로딩중...</span></div>
-  <div id="kimp-loading" class="loading-wrap">
-    <div class="loading-spinner"></div>
-    <div class="loading-text">업비트·빗썸 상장 코인 불러오는 중...</div>
-    <div class="loading-progress" id="load-progress">0개 로드됨</div>
+  <div class="sec-hd">김프 현황 — 국내(KRW) vs 해외(USD×환율) <span class="sec-cnt" id="kimp-cnt">로딩중</span></div>
+  <div id="kimp-loading" class="loading">
+    <div class="spinner"></div>
+    <div class="loading-txt" id="kimp-prog">업비트·빗썸 전체 상장 코인 로딩 중...</div>
   </div>
-  <div class="tw" id="kimp-table-wrap" style="display:none;"><table>
+  <div class="tw" id="kimp-tw" style="display:none;"><table>
     <thead><tr>
-      <th onclick="sortT('kimp',0)">코인 ↕</th>
-      <th class="r" onclick="sortT('kimp',1)">국내(KRW환산) ↕</th>
-      <th class="r" onclick="sortT('kimp',2)">Binance ↕</th>
-      <th class="r" onclick="sortT('kimp',3)">OKX ↕</th>
-      <th class="r" onclick="sortT('kimp',4)">Bybit ↕</th>
-      <th class="r" onclick="sortT('kimp',5)">Gate.io ↕</th>
-      <th class="r" onclick="sortT('kimp',6)">MEXC ↕</th>
-      <th class="r" onclick="sortT('kimp',7)">최대갭 ↕</th>
+      <th onclick="srt('kimp',0)">코인 ↕</th>
+      <th class="r" onclick="srt('kimp',1)">국내가격 ↕</th>
+      <th class="r" onclick="srt('kimp',2)">Binance ↕</th>
+      <th class="r" onclick="srt('kimp',3)">OKX ↕</th>
+      <th class="r" onclick="srt('kimp',4)">Bybit ↕</th>
+      <th class="r" onclick="srt('kimp',5)">Gate.io ↕</th>
+      <th class="r" onclick="srt('kimp',6)">MEXC ↕</th>
+      <th class="r" onclick="srt('kimp',7)">최대갭 ↕</th>
       <th class="c">신호</th>
     </tr></thead>
-    <tbody id="kimp-tbody"></tbody>
+    <tbody id="kimp-body"></tbody>
   </table></div>
-  <div id="kimp-pagination" class="pagination" style="display:none;"></div>
+  <div class="pg" id="kimp-pg" style="display:none;"></div>
 </div>
 
-<!-- 펀비매매 탭 -->
-<div id="tab-funding" class="tab-panel">
-  <div class="strategy-header">
-    <div class="strategy-title">
-      <div class="strategy-icon" style="background:rgba(61,142,255,.12);">📊</div>
-      <div>
-        <div class="strategy-name">펀비매매</div>
-        <div class="strategy-desc">선물 펀딩비로 정기 수익 — 현물+선물 헤지 전략</div>
-      </div>
-    </div>
-    <div class="strategy-stats">
-      <div class="sstat"><div class="sstat-val" id="fd-max" style="color:var(--green)">-</div><div class="sstat-label">최고 펀딩비</div></div>
-      <div class="sstat"><div class="sstat-val" id="fd-ann" style="color:var(--yellow)">-</div><div class="sstat-label">최대 연환산</div></div>
-      <div class="sstat"><div class="sstat-val" id="fd-opp" style="color:var(--purple)">-</div><div class="sstat-label">연10%+ 코인</div></div>
-      <div class="sstat"><div class="sstat-val" id="fd-neg" style="color:var(--blue)">-</div><div class="sstat-label">음수 펀딩</div></div>
-    </div>
-  </div>
-  <div class="fbar">
-    <span class="flabel">최소 연환산:</span>
-    <input class="finput" type="number" id="fund-min" value="5" step="1" min="0" oninput="renderFunding()">
-    <span class="flabel">%</span>
-    <span class="flabel" style="margin-left:8px;">검색:</span>
-    <input class="search-box" id="fund-search" placeholder="코인 검색..." oninput="renderFunding()" style="width:120px;">
-  </div>
-  <div class="sec">펀딩비 현황 (8시간 기준) <span class="sec-count" id="fund-count">-</span></div>
+<!-- ② 원상따리 -->
+<div id="tab-listing" class="tab-panel">
+  <div class="stat-bar" id="listing-stats"></div>
+  <div class="sec-hd">국내 신규 상장 모니터링 <span class="sec-cnt" id="listing-cnt">-</span></div>
+  <div class="listing-grid" id="listing-grid"></div>
+  <div class="sec-hd" style="margin-top:8px;">거래량 급등 코인 (상장 예고 시그널) <span class="sec-cnt" id="vol-cnt">-</span></div>
   <div class="tw"><table>
     <thead><tr>
-      <th onclick="sortT('fund',0)">코인 ↕</th>
-      <th class="r">현물가격</th>
-      <th class="r">선물가격</th>
-      <th class="r" onclick="sortT('fund',3)">Binance 펀딩비 ↕</th>
-      <th class="r" onclick="sortT('fund',4)">Bybit 펀딩비 ↕</th>
-      <th class="r" onclick="sortT('fund',5)">베이시스 ↕</th>
-      <th class="r" onclick="sortT('fund',6)">연환산 ↕</th>
-      <th class="c">전략</th>
+      <th>코인</th>
+      <th class="r">바이낸스 현재가</th>
+      <th class="r">업비트 상장가</th>
+      <th class="r">예상 김프</th>
+      <th class="r">24h 거래량 변화</th>
+      <th class="r">국내 상장</th>
+      <th class="c">상태</th>
     </tr></thead>
-    <tbody id="fund-tbody"></tbody>
+    <tbody id="vol-body"></tbody>
   </table></div>
-  <div id="fund-pagination" class="pagination" style="display:none;"></div>
 </div>
 
-<!-- 전체 아비트라지 탭 -->
-<div id="tab-arb" class="tab-panel">
-  <div class="sgrid" id="arb-stats"></div>
+<!-- ③ 갭매매 (현현·현선·선선) -->
+<div id="tab-gap" class="tab-panel">
   <div class="fbar">
-    <span class="flabel">검색:</span>
-    <input class="search-box" id="arb-search" placeholder="코인 검색..." oninput="renderArb()">
-    <span class="flabel" style="margin-left:8px;">정렬:</span>
-    <button class="fbtn active" id="arb-s-gap" onclick="setAS('gap')">갭 큰 순</button>
-    <button class="fbtn" id="arb-s-price" onclick="setAS('price')">가격 순</button>
-    <button class="fbtn" id="arb-s-name" onclick="setAS('name')">이름 순</button>
-    <span class="flabel" style="margin-left:8px;">최소 갭:</span>
-    <input class="finput" type="number" id="arb-min" value="0" step="0.1" min="0" oninput="renderArb()">
-    <span class="flabel">%</span>
+    <span class="fl">갭 유형:</span>
+    <button class="fb on" id="gap-hh" onclick="setGapType('hh')">현현갭</button>
+    <button class="fb" id="gap-hs" onclick="setGapType('hs')">현선갭</button>
+    <button class="fb" id="gap-ss" onclick="setGapType('ss')">선선갭</button>
+    <span class="fl" style="margin-left:6px;">최소:</span>
+    <input class="fi" type="number" id="gap-min" value="0.3" step="0.1" oninput="renderGap()">
+    <span class="fl">%</span>
+    <input class="fsearch" id="gap-q" placeholder="코인 검색..." oninput="renderGap()">
   </div>
-  <div class="sec">전체 코인 × 7거래소 현물 비교 <span class="sec-count" id="arb-count">-</span></div>
+
+  <!-- 현현갭 -->
+  <div id="gap-hh-panel">
+    <div class="stat-bar" id="hh-stats"></div>
+    <div class="sec-hd">현물-현물 갭 (거래소간 현물 가격차) <span class="sec-cnt" id="hh-cnt">-</span></div>
+    <div class="tw"><table>
+      <thead><tr>
+        <th onclick="srt('hh',0)">코인 ↕</th>
+        <th class="r">업비트(KRW환산)</th>
+        <th class="r">빗썸(KRW환산)</th>
+        <th class="r">Binance</th>
+        <th class="r">OKX</th>
+        <th class="r">Bybit</th>
+        <th class="r">Gate.io</th>
+        <th class="r">MEXC</th>
+        <th class="r" onclick="srt('hh',7)">최대갭 ↕</th>
+        <th class="c">전략</th>
+      </tr></thead>
+      <tbody id="hh-body"></tbody>
+    </table></div>
+    <div class="pg" id="hh-pg"></div>
+  </div>
+
+  <!-- 현선갭 -->
+  <div id="gap-hs-panel" style="display:none;">
+    <div class="stat-bar" id="hs-stats"></div>
+    <div class="sec-hd">현물-선물 갭 (베이시스) <span class="sec-cnt" id="hs-cnt">-</span></div>
+    <div class="tw"><table>
+      <thead><tr>
+        <th onclick="srt('hs',0)">코인 ↕</th>
+        <th class="r">현물(Binance)</th>
+        <th class="r">선물(Binance)</th>
+        <th class="r">선물(Bybit)</th>
+        <th class="r">선물(OKX)</th>
+        <th class="r" onclick="srt('hs',4)">베이시스 ↕</th>
+        <th class="r" onclick="srt('hs',5)">연환산 ↕</th>
+        <th class="r" onclick="srt('hs',6)">펀딩비 ↕</th>
+        <th class="c">전략</th>
+      </tr></thead>
+      <tbody id="hs-body"></tbody>
+    </table></div>
+    <div class="pg" id="hs-pg"></div>
+  </div>
+
+  <!-- 선선갭 -->
+  <div id="gap-ss-panel" style="display:none;">
+    <div class="stat-bar" id="ss-stats"></div>
+    <div class="sec-hd">선물-선물 갭 (거래소간 선물 가격차) <span class="sec-cnt" id="ss-cnt">-</span></div>
+    <div class="tw"><table>
+      <thead><tr>
+        <th onclick="srt('ss',0)">코인 ↕</th>
+        <th class="r">Binance 선물</th>
+        <th class="r">Bybit 선물</th>
+        <th class="r">OKX 선물</th>
+        <th class="r">Gate.io 선물</th>
+        <th class="r" onclick="srt('ss',4)">최대갭 ↕</th>
+        <th class="c">전략</th>
+      </tr></thead>
+      <tbody id="ss-body"></tbody>
+    </table></div>
+    <div class="pg" id="ss-pg"></div>
+  </div>
+</div>
+
+<!-- ④ 펀비매매 -->
+<div id="tab-funding" class="tab-panel">
+  <div class="stat-bar" id="fund-stats"></div>
+  <div class="fbar">
+    <span class="fl">최소 연환산:</span>
+    <input class="fi" type="number" id="fund-min" value="5" step="1" oninput="renderFund()">
+    <span class="fl">%</span>
+    <button class="fb on" style="margin-left:6px;" onclick="togFundSort(this,'ann')">연환산 순</button>
+    <button class="fb" onclick="togFundSort(this,'fund')">펀딩비 순</button>
+    <input class="fsearch" id="fund-q" placeholder="코인 검색..." oninput="renderFund()">
+  </div>
+  <div class="sec-hd">펀딩비 현황 (8시간 기준) <span class="sec-cnt" id="fund-cnt">-</span></div>
+  <div class="tw"><table>
+    <thead><tr>
+      <th onclick="srt('fund',0)">코인 ↕</th>
+      <th class="r">현물가격</th>
+      <th class="r">선물가격</th>
+      <th class="r" onclick="srt('fund',3)">Binance 펀딩비 ↕</th>
+      <th class="r" onclick="srt('fund',4)">Bybit 펀딩비 ↕</th>
+      <th class="r" onclick="srt('fund',5)">베이시스 ↕</th>
+      <th class="r" onclick="srt('fund',6)">연환산 ↕</th>
+      <th class="r" onclick="srt('fund',7)">연환산(펀비기준) ↕</th>
+      <th class="c">전략</th>
+    </tr></thead>
+    <tbody id="fund-body"></tbody>
+  </table></div>
+  <div class="pg" id="fund-pg"></div>
+</div>
+
+<!-- ⑤ 전체비교 -->
+<div id="tab-all" class="tab-panel">
+  <div class="fbar">
+    <input class="fsearch" id="all-q" placeholder="코인 검색..." oninput="renderAll()" style="width:160px;">
+    <span class="fl" style="margin-left:6px;">정렬:</span>
+    <button class="fb on" id="as-gap" onclick="setAS('gap')">갭 큰 순</button>
+    <button class="fb" id="as-price" onclick="setAS('price')">가격 순</button>
+    <button class="fb" id="as-name" onclick="setAS('name')">이름 순</button>
+    <span class="fl" style="margin-left:6px;">최소갭:</span>
+    <input class="fi" type="number" id="all-min" value="0" step="0.1" oninput="renderAll()">
+    <span class="fl">%</span>
+  </div>
+  <div class="sec-hd">전체 코인 × 7거래소 현물 비교 <span class="sec-cnt" id="all-cnt">-</span></div>
   <div class="tw"><table>
     <thead><tr>
       <th>코인</th>
@@ -310,687 +413,634 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <th class="r">MEXC</th>
       <th class="r">최대갭</th>
     </tr></thead>
-    <tbody id="arb-tbody"></tbody>
+    <tbody id="all-body"></tbody>
   </table></div>
-  <div id="arb-pagination" class="pagination" style="display:none;"></div>
+  <div class="pg" id="all-pg"></div>
 </div>
 
-<!-- AI 비서 탭 -->
+<!-- ⑥ AI비서 -->
 <div id="tab-ai" class="tab-panel">
-  <div class="sec">AI 아비트라지 비서</div>
+  <div class="sec-hd">AI 아비트라지 비서</div>
   <div class="aiw">
     <div class="aichat" id="ac"></div>
     <div class="airow">
-      <input class="aiinp" id="ai-inp" placeholder="예: 지금 김프 2% 이상 코인 어디야? / 최고 펀딩비 코인은?" />
+      <input class="aiinp" id="ai-inp" placeholder="예: 지금 김프 2% 이상 코인은? / 현선갭 캐시앤캐리 어디서 해?" />
       <button class="aisend" onclick="askAI()">분석 →</button>
     </div>
     <div class="qbtns">
       <button class="qbtn" onclick="qa('지금 김프 2% 이상 코인 알려줘')">김프 기회</button>
-      <button class="qbtn" onclick="qa('역프리미엄 기회 있어?')">역프 기회</button>
-      <button class="qbtn" onclick="qa('펀딩비로 무위험 수익 가능한 코인 알려줘')">펀비 전략</button>
-      <button class="qbtn" onclick="qa('김프 매매 수수료 감안하면 실제 수익은?')">수수료 분석</button>
-      <button class="qbtn" onclick="qa('현재 시장 상황 전반적으로 분석해줘')">시장 분석</button>
+      <button class="qbtn" onclick="qa('역프리미엄 기회 있는 코인은?')">역프 기회</button>
+      <button class="qbtn" onclick="qa('현선갭 캐시앤캐리 전략 설명해줘')">캐시앤캐리</button>
+      <button class="qbtn" onclick="qa('펀딩비 수익 기회 있는 코인 알려줘')">펀비 기회</button>
+      <button class="qbtn" onclick="qa('원상따리 전략 어떻게 해?')">원상따리 전략</button>
+      <button class="qbtn" onclick="qa('현재 시장 전반적인 아비트라지 기회 분석해줘')">전체 분석</button>
     </div>
   </div>
 </div>
 
 <div class="footer">
-  <span>데이터: 업비트·빗썸 전체 상장 코인 | Binance·OKX·Bybit·Gate.io·MEXC | 15초 자동갱신</span>
+  <span>업비트·빗썸 전체 상장 코인 | Binance·OKX·Bybit·Gate.io·MEXC | 15초 자동갱신</span>
   <span id="fcd">다음 갱신: 15s</span>
 </div>
 
 <script>
-// ============================================================
+// ═══════════════════════════════════════════════════════
 // 전역 상태
-// ============================================================
-let usdKrw = 1380;
-let currency = 'usd';
-let baseEx = 'upbit'; // 기준 국내거래소
-let cmpExSet = new Set(['binance','okx','bybit','gateio','mexc']);
-let arbSort = 'gap';
-let sortState = {kimp:{col:7,asc:false}, fund:{col:6,asc:false}};
-let cd = 15;
+// ═══════════════════════════════════════════════════════
+let usdKrw=1380, usdtKrw=1380;
+let cur='usd', baseEx='upbit', gapType='hh', allSort='gap', fundSort='ann';
+let cmpExSet=new Set(['binance','okx','bybit','gateio','mexc']);
+let sortS={kimp:{c:7,a:false},hh:{c:7,a:false},hs:{c:4,a:false},ss:{c:4,a:false},fund:{c:6,a:false}};
+let pages={kimp:1,hh:1,hs:1,ss:1,fund:1,all:1};
+const PS=50; // 페이지당 50개
+let mkt={}, upbitSet=new Set(), bithumbSet=new Set(), allCoins=new Set();
+let isLoaded=false, cd=15;
 
-// 데이터 저장소
-let upbitCoins = new Set();   // 업비트 상장 코인
-let bithumbCoins = new Set(); // 빗썸 상장 코인
-let allCoins = new Set();     // 전체 모니터링 코인
-let mkt = {};                 // 가격 데이터
-let isLoaded = false;
-
-// 페이지네이션
-const PAGE_SIZE = 50;
-let pages = {kimp:1, fund:1, arb:1};
-
-// ============================================================
-// 통화/포맷
-// ============================================================
-function setCur(c) {
-  currency = c;
-  document.querySelectorAll('.cur-btn').forEach((b,i) => b.classList.toggle('active', i===(c==='usd'?0:1)));
-  if(isLoaded) renderAll();
+// ═══════════════════════════════════════════════════════
+// 포맷 함수
+// ═══════════════════════════════════════════════════════
+function setCur(c){
+  cur=c;
+  document.querySelectorAll('.cur-btn').forEach((b,i)=>b.classList.toggle('on',i===(c==='usd'?0:1)));
+  if(isLoaded) renderAll_();
 }
-function fp(v) {
+function fp(v){ // USD 가격 포맷
   if(!v||isNaN(v)) return '-';
-  if(currency==='krw') {
-    const k = v * usdKrw;
+  if(cur==='krw'){
+    const k=v*usdKrw;
     if(k>=1e9) return '₩'+(k/1e9).toFixed(2)+'B';
     if(k>=1e6) return '₩'+(k/1e6).toFixed(2)+'M';
     if(k>=1000) return '₩'+Math.round(k).toLocaleString();
     if(k>=1) return '₩'+k.toFixed(2);
-    return '₩'+k.toFixed(4);
+    return '₩'+k.toFixed(5);
   }
   if(v>=1e5) return '$'+Math.round(v).toLocaleString();
-  if(v>=1) return '$'+v.toFixed(3);
+  if(v>=100) return '$'+v.toFixed(2);
+  if(v>=1) return '$'+v.toFixed(4);
   if(v>=0.0001) return '$'+v.toFixed(6);
   return '$'+v.toExponential(3);
 }
-function fpKRW(v) { // 원화 가격 직접 포맷 (업비트/빗썸)
+function fkrw(v){ // KRW 가격 포맷 (업/빗썸 가격)
   if(!v||isNaN(v)) return '-';
-  if(currency==='krw') {
+  if(cur==='krw'){
     if(v>=1e9) return '₩'+(v/1e9).toFixed(2)+'B';
     if(v>=1e6) return '₩'+(v/1e6).toFixed(2)+'M';
     if(v>=1000) return '₩'+Math.round(v).toLocaleString();
     return '₩'+v.toFixed(2);
   }
-  const u = v/usdKrw;
+  const u=v/usdKrw;
   if(u>=1e5) return '$'+Math.round(u).toLocaleString();
-  if(u>=1) return '$'+u.toFixed(3);
-  if(u>=0.0001) return '$'+u.toFixed(6);
-  return '$'+u.toExponential(3);
+  if(u>=1) return '$'+u.toFixed(4);
+  return '$'+u.toFixed(7);
 }
-function gapBadge(p) {
+function gb(p){ // 갭 배지
   const a=Math.abs(p);
   if(a>=5) return `<span class="badge br">${p>=0?'+':''}${p.toFixed(2)}%</span>`;
   if(a>=2) return `<span class="badge by">${p>=0?'+':''}${p.toFixed(2)}%</span>`;
   if(a>=0.3) return `<span class="badge bg">${p>=0?'+':''}${p.toFixed(2)}%</span>`;
   return `<span class="badge bn">${p>=0?'+':''}${p.toFixed(2)}%</span>`;
 }
-function gbar(p) {
+function gbar_(p){ // 갭 바
   const w=Math.min(Math.abs(p)/8*100,100);
-  const c=Math.abs(p)>=5?'#ff3355':Math.abs(p)>=2?'#ffd600':Math.abs(p)>=0.3?'#00e676':'#444460';
-  return `<div class="gbar"><div class="gbar-bg"><div class="gbar-fill" style="width:${w.toFixed(0)}%;background:${c};"></div></div></div>`;
+  const c=Math.abs(p)>=5?'#ff3366':Math.abs(p)>=2?'#ffcc00':Math.abs(p)>=0.3?'#00ff88':'#3a3a6a';
+  return `<div class="gw"><div class="gbg"><div class="gfill" style="width:${w.toFixed(0)}%;background:${c};"></div></div></div>`;
+}
+function sig(g,big=false){
+  if(g>=5) return '<span class="badge br">⚡ 대형갭</span>';
+  if(g>=2) return big?'<span class="badge by">★ 매수기회</span>':'<span class="badge by">★ 기회</span>';
+  if(g>=0.5) return '<span class="badge bg">모니터</span>';
+  if(g<=-2) return '<span class="badge bb">역프기회</span>';
+  return '<span class="badge bn">-</span>';
 }
 
-// ============================================================
+// ═══════════════════════════════════════════════════════
 // API 호출
-// ============================================================
-async function fj(url, timeout=10000) {
-  try {
-    const r = await fetch(url, {signal: AbortSignal.timeout(timeout)});
-    return await r.json();
-  } catch(e) { return null; }
+// ═══════════════════════════════════════════════════════
+async function fj(url,t=9000){
+  try{ const r=await fetch(url,{signal:AbortSignal.timeout(t)}); return await r.json(); }catch(e){ return null; }
 }
 
-// 업비트 전체 상장 코인 + 가격
-async function fetchUpbitAll() {
-  try {
-    // 마켓 목록
-    const markets = await fj('https://api.upbit.com/v1/market/all?isDetails=false');
-    if(!markets) return {};
-    const krwMarkets = markets.filter(m => m.market.startsWith('KRW-')).map(m => m.market);
-    upbitCoins = new Set(krwMarkets.map(m => m.replace('KRW-','')));
-
-    // 가격 (100개씩 나눠서 요청)
-    const chunks = [];
-    for(let i=0; i<krwMarkets.length; i+=100) chunks.push(krwMarkets.slice(i,i+100));
-    const o = {};
-    for(const chunk of chunks) {
-      const r = await fj('https://api.upbit.com/v1/ticker?markets='+chunk.join(','), 8000);
-      if(Array.isArray(r)) r.forEach(x => {
-        const c = x.market.replace('KRW-','');
-        o[c] = x.trade_price;
-      });
-    }
-    return o;
-  } catch(e) { return {}; }
-}
-
-// 빗썸 전체 상장 코인 + 가격
-async function fetchBithumbAll() {
-  try {
-    const d = await fj('https://api.bithumb.com/public/ticker/ALL_KRW');
-    if(!d || d.status !== '0000') return {};
-    const o = {};
-    Object.keys(d.data).forEach(k => {
-      if(k==='date') return;
-      bithumbCoins.add(k);
-      if(d.data[k]?.closing_price) o[k] = parseFloat(d.data[k].closing_price);
-    });
-    return o;
-  } catch(e) { return {}; }
-}
-
-// 바이낸스 전체 현물
-async function fetchBinanceAll() {
-  const d = await fj('https://api.binance.com/api/v3/ticker/price');
-  if(!d) return {};
-  const o = {};
-  d.forEach(x => { if(x.symbol.endsWith('USDT')) o[x.symbol.replace('USDT','')] = parseFloat(x.price); });
+async function loadUpbit(){
+  const mkts=await fj('https://api.upbit.com/v1/market/all?isDetails=false');
+  if(!mkts) return {};
+  const krw=mkts.filter(m=>m.market.startsWith('KRW-')).map(m=>m.market);
+  krw.forEach(m=>upbitSet.add(m.replace('KRW-','')));
+  document.getElementById('kimp-prog').textContent=`업비트 ${krw.length}개 코인 가격 로딩 중...`;
+  const chunks=[]; for(let i=0;i<krw.length;i+=100) chunks.push(krw.slice(i,i+100));
+  const o={};
+  for(const ck of chunks){
+    const r=await fj('https://api.upbit.com/v1/ticker?markets='+ck.join(','),8000);
+    if(Array.isArray(r)) r.forEach(x=>{ const c=x.market.replace('KRW-',''); o[c]=x.trade_price; });
+  }
   return o;
 }
-
-// 바이낸스 선물
-async function fetchBinanceFutures() {
-  const d = await fj('https://fapi.binance.com/fapi/v1/ticker/price');
-  if(!d) return {};
-  const o = {};
-  d.forEach(x => { if(x.symbol.endsWith('USDT')) o[x.symbol.replace('USDT','')] = parseFloat(x.price); });
+async function loadBithumb(){
+  const d=await fj('https://api.bithumb.com/public/ticker/ALL_KRW');
+  if(!d||d.status!=='0000') return {};
+  const o={};
+  Object.keys(d.data).forEach(k=>{ if(k==='date') return; bithumbSet.add(k); if(d.data[k]?.closing_price) o[k]=parseFloat(d.data[k].closing_price); });
   return o;
 }
+async function loadBinanceSpot(){ const d=await fj('https://api.binance.com/api/v3/ticker/price'); if(!d) return {}; const o={}; d.forEach(x=>{ if(x.symbol.endsWith('USDT')) o[x.symbol.replace('USDT','')]=parseFloat(x.price); }); return o; }
+async function loadBinanceFut(){ const d=await fj('https://fapi.binance.com/fapi/v1/ticker/price'); if(!d) return {}; const o={}; d.forEach(x=>{ if(x.symbol.endsWith('USDT')) o[x.symbol.replace('USDT','')]=parseFloat(x.price); }); return o; }
+async function loadBinanceFund(){ const d=await fj('https://fapi.binance.com/fapi/v1/premiumIndex'); if(!d) return {}; const o={}; if(Array.isArray(d)) d.forEach(x=>{ if(x.symbol.endsWith('USDT')) o[x.symbol.replace('USDT','')]=parseFloat(x.lastFundingRate||0)*100; }); return o; }
+async function loadOKX(){ const d=await fj('https://www.okx.com/api/v5/market/tickers?instType=SPOT'); if(!d?.data) return {}; const o={}; d.data.forEach(x=>{ if(x.instId.endsWith('-USDT')&&x.last) o[x.instId.replace('-USDT','')]=parseFloat(x.last); }); return o; }
+async function loadOKXFut(){ const d=await fj('https://www.okx.com/api/v5/market/tickers?instType=SWAP'); if(!d?.data) return {}; const o={}; d.data.forEach(x=>{ if(x.instId.endsWith('-USDT-SWAP')&&x.last) o[x.instId.replace('-USDT-SWAP','')]=parseFloat(x.last); }); return o; }
+async function loadBybit(){ const d=await fj('https://api.bybit.com/v5/market/tickers?category=spot'); if(!d?.result?.list) return {}; const o={}; d.result.list.forEach(x=>{ if(x.symbol.endsWith('USDT')&&x.lastPrice) o[x.symbol.replace('USDT','')]=parseFloat(x.lastPrice); }); return o; }
+async function loadBybitFut(){ const d=await fj('https://api.bybit.com/v5/market/tickers?category=linear'); if(!d?.result?.list) return {p:{},f:{}}; const p={},f={}; d.result.list.forEach(x=>{ if(x.symbol.endsWith('USDT')){ const c=x.symbol.replace('USDT',''); if(x.lastPrice) p[c]=parseFloat(x.lastPrice); if(x.fundingRate) f[c]=parseFloat(x.fundingRate)*100; } }); return {p,f}; }
+async function loadGateio(){ const d=await fj('https://api.gateio.ws/api/v4/spot/tickers'); if(!d) return {}; const o={}; d.forEach(x=>{ if(x.currency_pair.endsWith('_USDT')&&x.last) o[x.currency_pair.replace('_USDT','')]=parseFloat(x.last); }); return o; }
+async function loadGateioFut(){ const d=await fj('https://api.gateio.ws/api/v4/futures/usdt/tickers'); if(!d) return {}; const o={}; d.forEach(x=>{ if(x.contract.endsWith('_USDT')&&x.last) o[x.contract.replace('_USDT','')]=parseFloat(x.last); }); return o; }
+async function loadMEXC(){ const d=await fj('https://api.mexc.com/api/v3/ticker/price'); if(!d) return {}; const o={}; (Array.isArray(d)?d:[]).forEach(x=>{ if(x.symbol.endsWith('USDT')&&x.price) o[x.symbol.replace('USDT','')]=parseFloat(x.price); }); return o; }
+async function loadCoinone(){ try{ const d=await fj('https://api.coinone.co.kr/public/v2/ticker_new/KRW'); if(!d?.tickers) return {}; const o={}; d.tickers.forEach(x=>{ const c=x.target_currency?.toUpperCase(); if(c&&x.last) o[c]=parseFloat(x.last); }); return o; }catch(e){ return {}; } }
+async function loadRate(){ try{ const d=await fj('https://api.exchangerate-api.com/v4/latest/USD'); if(d?.rates?.KRW) usdKrw=d.rates.KRW; }catch(e){} }
 
-// 바이낸스 펀딩비
-async function fetchBinanceFunding() {
-  const d = await fj('https://fapi.binance.com/fapi/v1/premiumIndex');
-  if(!d) return {};
-  const o = {};
-  if(Array.isArray(d)) d.forEach(x => {
-    if(x.symbol.endsWith('USDT')) o[x.symbol.replace('USDT','')] = parseFloat(x.lastFundingRate||0)*100;
-  });
-  return o;
-}
+// ═══════════════════════════════════════════════════════
+// 메인 데이터 로드
+// ═══════════════════════════════════════════════════════
+async function refresh(){
+  document.getElementById('upd-time').textContent='갱신중...';
+  try{
+    const [up,bt,bs,bf,bfund,os,of_,bys,byfd,gs,gf,mx,co] = await Promise.allSettled([
+      loadUpbit(),loadBithumb(),
+      loadBinanceSpot(),loadBinanceFut(),loadBinanceFund(),
+      loadOKX(),loadOKXFut(),
+      loadBybit(),loadBybitFut(),
+      loadGateio(),loadGateioFut(),
+      loadMEXC(),loadCoinone()
+    ]).then(rs=>rs.map(r=>r.status==='fulfilled'?r.value:(r.value?.p?{p:{},f:{}}:{})));
 
-// OKX 현물
-async function fetchOKX() {
-  const d = await fj('https://www.okx.com/api/v5/market/tickers?instType=SPOT');
-  if(!d?.data) return {};
-  const o = {};
-  d.data.forEach(x => { if(x.instId.endsWith('-USDT') && x.last) o[x.instId.replace('-USDT','')] = parseFloat(x.last); });
-  return o;
-}
+    const byPrices=byfd?.p||bys, byFund=byfd?.f||{};
+    allCoins=new Set([...upbitSet,...bithumbSet]);
 
-// Bybit 현물
-async function fetchBybit() {
-  const d = await fj('https://api.bybit.com/v5/market/tickers?category=spot');
-  if(!d?.result?.list) return {};
-  const o = {};
-  d.result.list.forEach(x => { if(x.symbol.endsWith('USDT') && x.lastPrice) o[x.symbol.replace('USDT','')] = parseFloat(x.lastPrice); });
-  return o;
-}
-
-// Bybit 선물 + 펀딩비
-async function fetchBybitFutures() {
-  const d = await fj('https://api.bybit.com/v5/market/tickers?category=linear');
-  if(!d?.result?.list) return {prices:{},funding:{}};
-  const prices = {}, funding = {};
-  d.result.list.forEach(x => {
-    if(x.symbol.endsWith('USDT')) {
-      const c = x.symbol.replace('USDT','');
-      if(x.lastPrice) prices[c] = parseFloat(x.lastPrice);
-      if(x.fundingRate) funding[c] = parseFloat(x.fundingRate)*100;
-    }
-  });
-  return {prices, funding};
-}
-
-// Gate.io 현물
-async function fetchGateio() {
-  const d = await fj('https://api.gateio.ws/api/v4/spot/tickers');
-  if(!d) return {};
-  const o = {};
-  d.forEach(x => { if(x.currency_pair.endsWith('_USDT') && x.last) o[x.currency_pair.replace('_USDT','')] = parseFloat(x.last); });
-  return o;
-}
-
-// MEXC 현물
-async function fetchMEXC() {
-  const d = await fj('https://api.mexc.com/api/v3/ticker/price');
-  if(!d) return {};
-  const o = {};
-  (Array.isArray(d)?d:[]).forEach(x => { if(x.symbol.endsWith('USDT') && x.price) o[x.symbol.replace('USDT','')] = parseFloat(x.price); });
-  return o;
-}
-
-// 코인원
-async function fetchCoinone() {
-  try {
-    const d = await fj('https://api.coinone.co.kr/public/v2/ticker_new/KRW');
-    if(!d?.tickers) return {};
-    const o = {};
-    d.tickers.forEach(x => {
-      const c = x.target_currency?.toUpperCase();
-      if(c && x.last) o[c] = parseFloat(x.last);
-    });
-    return o;
-  } catch(e) { return {}; }
-}
-
-// 환율
-async function fetchUSDKRW() {
-  try { const d = await fj('https://api.exchangerate-api.com/v4/latest/USD'); if(d?.rates?.KRW) usdKrw = d.rates.KRW; } catch(e) {}
-}
-
-// ============================================================
-// 메인 데이터 갱신
-// ============================================================
-async function refresh() {
-  document.getElementById('upd').textContent = '갱신 중...';
-  try {
-    const [
-      upbitPrices, bithumbPrices,
-      binanceSpot, binanceFut, binanceFund,
-      okxSpot, bybitSpot, bybitFutData, gateioSpot, mexcSpot, coinonePrices
-    ] = await Promise.allSettled([
-      fetchUpbitAll(), fetchBithumbAll(),
-      fetchBinanceAll(), fetchBinanceFutures(), fetchBinanceFunding(),
-      fetchOKX(), fetchBybit(), fetchBybitFutures(), fetchGateio(), fetchMEXC(), fetchCoinone()
-    ]).then(res => res.map(r => r.status==='fulfilled' ? r.value : (r.value?.prices ? {prices:{},funding:{}} : {})));
-
-    const bybitPrices = bybitFutData?.prices || bybitSpot;
-    const bybitFunding = bybitFutData?.funding || {};
-
-    // 전체 모니터링 코인 = 업비트 + 빗썸 상장 코인
-    allCoins = new Set([...upbitCoins, ...bithumbCoins]);
-
-    // 데이터 통합
-    const data = {};
-    allCoins.forEach(c => {
-      const upbit = upbitPrices[c];   // KRW
-      const bithumb = bithumbPrices[c]; // KRW
-      const binance = binanceSpot[c];  // USD
-      const okx = okxSpot[c];
-      const bybit = bybitSpot[c];
-      const gateio = gateioSpot[c];
-      const mexc = mexcSpot[c];
-      const coinone = coinonePrices[c]; // KRW
-      const binFut = binanceFut[c];
-      const byfut = bybitFutData?.prices?.[c];
-
-      // 바이낸스 가격 기준으로 USD 환산
-      const baseUSD = binance || okx || bybit || gateio || mexc;
-      if(!baseUSD && !upbit && !bithumb) return; // 아무 데이터도 없으면 skip
-
-      data[c] = {
-        krw: { upbit, bithumb, coinone },
-        usd: { binance, okx, bybit, gateio, mexc },
-        futures: { binance: binFut, bybit: byfut },
-        funding: { binance: binanceFund[c]||0, bybit: bybitFunding[c]||0 },
-        inUpbit: upbitCoins.has(c),
-        inBithumb: bithumbCoins.has(c),
+    const data={};
+    allCoins.forEach(c=>{
+      const upPrice=up[c], btPrice=bt[c];
+      const binance=bs[c], okx=os[c], bybit=bys[c], gate=gs[c], mexc=mx[c];
+      const binFut=bf[c], byFut=byPrices[c], okFut=of_[c], gFut=gf[c];
+      const fund_bn=bfund[c]||0, fund_by=byFund[c]||0;
+      const coinone=co[c];
+      const baseUSD=binance||okx||bybit||gate||mexc;
+      if(!baseUSD&&!upPrice&&!btPrice) return;
+      data[c]={
+        krw:{upbit:upPrice,bithumb:btPrice,coinone},
+        usd:{binance,okx,bybit,gateio:gate,mexc},
+        fut:{binance:binFut,bybit:byFut,okx:okFut,gateio:gFut},
+        fund:{binance:fund_bn,bybit:fund_by},
+        inUp:upbitSet.has(c), inBt:bithumbSet.has(c)
       };
     });
+    mkt=data; isLoaded=true;
 
-    mkt = data;
-    isLoaded = true;
-
-    // 로딩 화면 숨기고 테이블 표시
-    document.getElementById('kimp-loading').style.display = 'none';
-    document.getElementById('kimp-table-wrap').style.display = 'block';
-    document.getElementById('kimp-pagination').style.display = 'flex';
+    // 로딩 → 테이블 전환
+    document.getElementById('kimp-loading').style.display='none';
+    document.getElementById('kimp-tw').style.display='block';
+    document.getElementById('kimp-pg').style.display='flex';
 
     updateHeader();
-    renderAll();
+    renderAll_();
     checkAlerts();
-    document.getElementById('upd').textContent = new Date().toLocaleTimeString('ko-KR');
-  } catch(e) {
-    console.error(e);
-    document.getElementById('upd').textContent = '오류 발생';
+    document.getElementById('upd-time').textContent=new Date().toLocaleTimeString('ko-KR');
+  }catch(e){ document.getElementById('upd-time').textContent='오류'; console.error(e); }
+}
+
+function updateHeader(){
+  const btc=mkt.BTC;
+  if(btc?.usd?.binance) document.getElementById('h-btc').textContent=fp(btc.usd.binance);
+  if(btc?.krw?.upbit&&btc?.usd?.binance){
+    const k=((btc.krw.upbit/usdKrw/btc.usd.binance)-1)*100;
+    const el=document.getElementById('h-kimp');
+    el.textContent=(k>=0?'+':'')+k.toFixed(2)+'%';
+    el.className=k>=2?'pos':k<=-0.5?'neg':'neu';
   }
+  document.getElementById('h-usdt').textContent=Math.round(usdtKrw).toLocaleString();
+  document.getElementById('h-rate').textContent='₩'+Math.round(usdKrw).toLocaleString();
+  document.getElementById('h-cnt').textContent=Object.keys(mkt).length;
 }
 
-function updateHeader() {
-  const btc = mkt.BTC;
-  if(btc?.usd?.binance) document.getElementById('h-btc').textContent = fp(btc.usd.binance);
-  if(mkt.ETH?.usd?.binance) document.getElementById('h-eth').textContent = fp(mkt.ETH?.usd?.binance);
-  const btcKimp = btc?.krw?.upbit && btc?.usd?.binance ? ((btc.krw.upbit/usdKrw/btc.usd.binance)-1)*100 : null;
-  if(btcKimp!==null) {
-    const el = document.getElementById('h-kimp');
-    el.textContent = (btcKimp>=0?'+':'')+btcKimp.toFixed(2)+'%';
-    el.style.color = btcKimp>=2?'#ffd600':btcKimp>=0?'#00e676':'#3d8eff';
-  }
-  document.getElementById('h-rate').textContent = '₩'+Math.round(usdKrw).toLocaleString();
-  document.getElementById('h-count').textContent = Object.keys(mkt).length;
-  document.getElementById('load-progress').textContent = Object.keys(mkt).length+'개 로드됨';
+function renderAll_(){ renderKimp(); renderGap(); renderFund(); renderAll(); }
+
+// ═══════════════════════════════════════════════════════
+// 김프매매
+// ═══════════════════════════════════════════════════════
+function getKimpRows(){
+  const min=parseFloat(document.getElementById('kimp-min').value)||0;
+  const q=(document.getElementById('kimp-q')?.value||'').toUpperCase();
+  return Object.entries(mkt).filter(([c])=>!q||c.includes(q)).map(([c,d])=>{
+    const krwP=d.krw[baseEx]; if(!krwP) return null;
+    const krwUSD=krwP/usdKrw;
+    const gaps={}, cmpExs=['binance','okx','bybit','gateio','mexc'];
+    let maxG=0;
+    cmpExs.forEach(ex=>{ if(!cmpExSet.has(ex)||!d.usd[ex]) return; const g=((krwUSD/d.usd[ex])-1)*100; gaps[ex]=g; if(Math.abs(g)>Math.abs(maxG)) maxG=g; });
+    if(Math.abs(maxG)<min) return null;
+    return {c,d,krwP,krwUSD,gaps,maxG};
+  }).filter(Boolean).sort((a,b)=>{
+    const {c,a:asc}=sortS.kimp;
+    if(c===0) return asc?(a.c>b.c?1:-1):(a.c<b.c?1:-1);
+    if(c===7) return asc?a.maxG-b.maxG:b.maxG-a.maxG;
+    const exs=['binance','okx','bybit','gateio','mexc'];
+    const ex=exs[c-2]||'binance';
+    return asc?(a.gaps[ex]||0)-(b.gaps[ex]||0):(b.gaps[ex]||0)-(a.gaps[ex]||0);
+  });
 }
-
-function renderAll() {
-  renderKimp();
-  renderFunding();
-  renderArb();
-}
-
-// ============================================================
-// 김프 렌더
-// ============================================================
-function getKimpData() {
-  const min = parseFloat(document.getElementById('kimp-min').value)||0;
-  const search = (document.getElementById('kimp-search')?.value||'').toUpperCase();
-
-  return Object.entries(mkt).filter(([c]) => {
-    if(search && !c.includes(search)) return false;
-    return true;
-  }).map(([c, d]) => {
-    // 기준 국내거래소 KRW → USD 환산
-    const krwPrice = d.krw[baseEx];
-    const krwUSD = krwPrice ? krwPrice / usdKrw : null;
-
-    // 해외거래소 USD 가격
-    const overseas = {};
-    let maxGap = 0;
-    let maxGapEx = '';
-    ['binance','okx','bybit','gateio','mexc'].forEach(ex => {
-      if(!cmpExSet.has(ex) || !d.usd[ex] || !krwUSD) return;
-      const g = ((krwUSD / d.usd[ex]) - 1) * 100;
-      overseas[ex] = { price: d.usd[ex], gap: g };
-      if(Math.abs(g) > Math.abs(maxGap)) { maxGap = g; maxGapEx = ex; }
-    });
-
-    return { c, d, krwPrice, krwUSD, overseas, maxGap, maxGapEx };
-  }).filter(r => r.krwPrice && Math.abs(r.maxGap) >= min)
-    .sort((a, b) => {
-      const {col, asc} = sortState.kimp;
-      if(col===0) return asc?(a.c>b.c?1:-1):(a.c<b.c?1:-1);
-      if(col===7) return asc?a.maxGap-b.maxGap:b.maxGap-a.maxGap;
-      const exs = ['binance','okx','bybit','gateio','mexc'];
-      const ex = exs[col-2];
-      const va = a.overseas[ex]?.gap || 0;
-      const vb = b.overseas[ex]?.gap || 0;
-      return asc?va-vb:vb-va;
-    });
-}
-
-function renderKimp() {
+function renderKimp(){
   if(!isLoaded) return;
-  const rows = getKimpData();
-  const total = rows.length;
-  const page = pages.kimp;
-  const start = (page-1)*PAGE_SIZE, end = Math.min(start+PAGE_SIZE, total);
-  const pageRows = rows.slice(start, end);
-
-  // 요약 통계
-  const kimps = rows.filter(r=>r.overseas.binance).map(r=>r.overseas.binance.gap);
-  document.getElementById('kp-avg').textContent = kimps.length ? (kimps.reduce((a,b)=>a+b,0)/kimps.length).toFixed(2)+'%' : '-';
-  const maxKimp = rows.reduce((m,r)=>r.maxGap>m?r.maxGap:m, -99);
-  document.getElementById('kp-max').textContent = maxKimp>-99 ? (maxKimp>=0?'+':'')+maxKimp.toFixed(2)+'%' : '-';
-  document.getElementById('kp-neg').textContent = rows.filter(r=>r.maxGap<=-0.5).length+'개';
-  document.getElementById('kp-opp').textContent = rows.filter(r=>r.maxGap>=2).length+'개';
-  document.getElementById('badge-kimp').textContent = rows.filter(r=>r.maxGap>=2).length;
-  document.getElementById('kimp-count').textContent = `${total}개 (${start+1}-${end})`;
-
-  const exList = ['binance','okx','bybit','gateio','mexc'];
-  const tbody = document.getElementById('kimp-tbody');
-  tbody.innerHTML = pageRows.map(({c,d,krwPrice,overseas,maxGap}) => {
-    const exName = baseEx==='upbit'?'업비트':baseEx==='bithumb'?'빗썸':'코인원';
-    const cells = exList.map(ex => {
+  const rows=getKimpRows(), tot=rows.length;
+  const pg=pages.kimp, st=(pg-1)*PS, en=Math.min(st+PS,tot);
+  const pageRows=rows.slice(st,en);
+  const kimps=rows.filter(r=>r.gaps.binance!==undefined).map(r=>r.gaps.binance);
+  const avg=kimps.length?(kimps.reduce((a,b)=>a+b,0)/kimps.length).toFixed(2)+'%':'-';
+  const maxG=rows.reduce((m,r)=>r.maxG>m?r.maxG:m,-99);
+  // 요약
+  document.getElementById('kimp-stats').innerHTML=`
+    <div class="sb ${maxG>=2?'hot':''}"><div class="sb-label">평균 김프(업비트)</div><div class="sb-val" style="color:${parseFloat(avg)>=2?'var(--yellow)':parseFloat(avg)>=0?'var(--green)':'var(--blue)'}">${avg}</div><div class="sb-sub">바이낸스 기준</div></div>
+    <div class="sb"><div class="sb-label">최대 김프</div><div class="sb-val" style="color:var(--red)">${maxG>-99?(maxG>=0?'+':'')+maxG.toFixed(2)+'%':'-'}</div><div class="sb-sub">${rows[0]?.c||'-'}</div></div>
+    <div class="sb"><div class="sb-label">역프 코인</div><div class="sb-val" style="color:var(--blue)">${rows.filter(r=>r.maxG<=-0.5).length}개</div><div class="sb-sub">역프리미엄 발생</div></div>
+    <div class="sb"><div class="sb-label">2%+ 기회</div><div class="sb-val" style="color:var(--yellow)">${rows.filter(r=>r.maxG>=2).length}개</div><div class="sb-sub">즉시 확인 필요</div></div>
+    <div class="sb"><div class="sb-label">총 모니터링</div><div class="sb-val">${tot}개</div><div class="sb-sub">업비트+빗썸 전체</div></div>
+  `;
+  document.getElementById('kimp-cnt').textContent=`${tot}개 (${st+1}-${en})`;
+  document.getElementById('b-kimp').textContent=rows.filter(r=>r.maxG>=2).length;
+  const tbody=document.getElementById('kimp-body');
+  const exs=['binance','okx','bybit','gateio','mexc'];
+  tbody.innerHTML=pageRows.map(({c,d,krwP,gaps,maxG})=>{
+    const cells=exs.map(ex=>{
       if(!cmpExSet.has(ex)) return '';
-      const info = overseas[ex];
-      if(!info) return `<td class="r"><span class="na">-</span></td>`;
-      return `<td class="r"><div class="pv">${fp(info.price)}</div>${gapBadge(info.gap)}${gbar(info.gap)}</td>`;
+      const g=gaps[ex]; const p=d.usd[ex];
+      if(!p) return `<td class="r"><span class="na">-</span></td>`;
+      return `<td class="r"><div class="pv">${fp(p)}</div>${g!==undefined?gb(g)+gbar_(g):''}</td>`;
     });
-    const sig = maxGap>=5?'<span class="badge br">⚡ 대형갭</span>':maxGap>=2?'<span class="badge by">★ 기회</span>':maxGap>=0.5?'<span class="badge bg">모니터</span>':maxGap<=-2?'<span class="badge bb">역프기회</span>':'<span class="badge bn">-</span>';
-    const domestic = `${d.inUpbit?'<span style="font-size:9px;color:#3d8eff;">업</span>':''}${d.inBithumb?'<span style="font-size:9px;color:#ff5100;margin-left:2px;">빗</span>':''}`;
+    const exN=baseEx==='upbit'?'업비트':baseEx==='bithumb'?'빗썸':'코인원';
+    const tags=`${d.inUp?'<span style="font-size:8px;color:#4488ff;margin-left:2px;">업</span>':''}${d.inBt?'<span style="font-size:8px;color:#ff5100;margin-left:1px;">빗</span>':''}`;
     return `<tr>
-      <td><div class="coin-cell"><div class="coin-icon">${c.slice(0,2)}</div><div><div class="cn">${c} ${domestic}</div></div></div></td>
-      <td class="r"><div class="pv">${fpKRW(krwPrice)}</div><div class="ps">${exName}</div></td>
+      <td><div class="cc"><div class="ci">${c.slice(0,2)}</div><div><div class="cn">${c}${tags}</div></div></div></td>
+      <td class="r"><div class="pv">${fkrw(krwP)}</div><div class="psub">${exN}</div></td>
       ${cells.join('')}
-      <td class="r"><div class="pv" style="color:${maxGap>=5?'var(--red)':maxGap>=2?'var(--yellow)':maxGap<=-2?'var(--blue)':'var(--green)'};font-size:13px;">${maxGap>=0?'+':''}${maxGap.toFixed(2)}%</div></td>
-      <td class="c">${sig}</td>
+      <td class="r"><div class="pv" style="color:${maxG>=5?'var(--red)':maxG>=2?'var(--yellow)':maxG<=-2?'var(--blue)':'var(--green)'};font-size:13px;">${maxG>=0?'+':''}${maxG.toFixed(2)}%</div></td>
+      <td class="c">${sig(maxG)}</td>
     </tr>`;
   }).join('');
-
-  renderPagination('kimp', page, Math.ceil(total/PAGE_SIZE));
+  renderPg('kimp',pg,Math.ceil(tot/PS));
 }
 
-// ============================================================
-// 펀비 렌더
-// ============================================================
-function renderFunding() {
+// ═══════════════════════════════════════════════════════
+// 원상따리
+// ═══════════════════════════════════════════════════════
+const LISTING=[
+  {coin:'PENGU',ex:'업비트',st:'pending',hot:true},
+  {coin:'JUP',ex:'빗썸',st:'pending',hot:true},
+  {coin:'RENDER',ex:'업비트',st:'listed',hot:false},
+  {coin:'WLD',ex:'빗썸',st:'listed',hot:false},
+  {coin:'ZK',ex:'업비트',st:'watch',hot:false},
+  {coin:'IO',ex:'빗썸',st:'watch',hot:false},
+  {coin:'EIGEN',ex:'코인원',st:'watch',hot:false},
+  {coin:'STRK',ex:'업비트',st:'watch',hot:false},
+  {coin:'SAGA',ex:'빗썸',st:'watch',hot:false},
+];
+const VOL_DATA=[
+  {coin:'PENGU',volChg:312,priceChg:18.4,listed:'미상장'},
+  {coin:'EIGEN',volChg:180,priceChg:9.2,listed:'바이낸스만'},
+  {coin:'IO',volChg:95,priceChg:6.1,listed:'바이낸스만'},
+  {coin:'ZK',volChg:74,priceChg:4.8,listed:'바이낸스만'},
+  {coin:'STRK',volChg:55,priceChg:3.2,listed:'바이낸스만'},
+  {coin:'SAGA',volChg:42,priceChg:2.1,listed:'바이낸스만'},
+];
+function renderListing(){
+  const smMap={listed:'상장완료',pending:'상장예정',watch:'모니터링'};
+  const scMap={listed:'bg',pending:'br',watch:'bn'};
+  let hot=0, maxK=-99, maxKc='';
+  const grid=document.getElementById('listing-grid');
+  grid.innerHTML=LISTING.map(d=>{
+    const bp=mkt[d.coin]?.usd?.binance;
+    const up=mkt[d.coin]?.krw?.upbit;
+    const kimp=bp&&up?((up/usdKrw/bp)-1)*100:null;
+    if(kimp&&kimp>=2){hot++;}
+    if(kimp&&kimp>maxK){maxK=kimp;maxKc=d.coin;}
+    const isNew=d.st==='pending', isHot=d.hot||(kimp&&kimp>=2);
+    return `<div class="lcard ${isNew?'pending':isHot?'hot':''}">
+      <div class="lc-head">
+        <div><div class="lc-coin">${d.coin}</div><div class="lc-ex">${d.ex} <span class="badge ${scMap[d.st]}" style="font-size:8px;">${smMap[d.st]}</span></div></div>
+        ${kimp!==null?`<div style="text-align:right;">${gb(kimp)}<div style="font-size:8px;color:var(--text3);margin-top:1px;">김프</div></div>`:''}
+      </div>
+      <div class="lc-prices">
+        <div class="lc-p"><div class="lc-pl">Binance</div><div class="lc-pv">${bp?fp(bp):'-'}</div></div>
+        <div class="lc-p"><div class="lc-pl">${d.ex}</div><div class="lc-pv">${up?fkrw(up):'-'}</div></div>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('listing-cnt').textContent=LISTING.length+'개';
+  document.getElementById('b-listing').textContent=LISTING.filter(d=>d.st==='pending').length;
+  document.getElementById('listing-stats').innerHTML=`
+    <div class="sb"><div class="sb-label">상장 예정</div><div class="sb-val" style="color:var(--red)">${LISTING.filter(d=>d.st==='pending').length}개</div><div class="sb-sub">즉시 대응 필요</div></div>
+    <div class="sb"><div class="sb-label">모니터링 중</div><div class="sb-val">${LISTING.filter(d=>d.st==='watch').length}개</div><div class="sb-sub">상장 가능성</div></div>
+    <div class="sb"><div class="sb-label">HOT 김프</div><div class="sb-val" style="color:var(--yellow)">${maxK>-99?(maxK>=0?'+':'')+maxK.toFixed(2)+'%':'-'}</div><div class="sb-sub">${maxKc||'-'}</div></div>
+    <div class="sb"><div class="sb-label">갭 2%+ 상장코인</div><div class="sb-val" style="color:var(--green)">${hot}개</div><div class="sb-sub">즉시 확인</div></div>
+  `;
+  const vb=document.getElementById('vol-body');
+  vb.innerHTML=VOL_DATA.map(d=>{
+    const bp=mkt[d.coin]?.usd?.binance;
+    const up=mkt[d.coin]?.krw?.upbit;
+    const kimp=bp&&up?((up/usdKrw/bp)-1)*100:null;
+    const sc=d.volChg>=200?'br':d.volChg>=100?'by':'bg';
+    return `<tr>
+      <td><div class="cc"><div class="ci">${d.coin.slice(0,2)}</div><div class="cn">${d.coin}</div></div></td>
+      <td class="r"><div class="pv">${bp?fp(bp):'-'}</div></td>
+      <td class="r"><div class="pv">${up?fkrw(up):'-'}</div></td>
+      <td class="r">${kimp!==null?gb(kimp)+gbar_(kimp):'<span class="na">-</span>'}</td>
+      <td class="r"><span class="badge ${sc}">+${d.volChg}%</span></td>
+      <td class="r" style="font-size:10px;color:var(--text2);">${d.listed}</td>
+      <td class="c"><span class="badge ${sc}">${d.volChg>=200?'⚡ 즉시':d.volChg>=100?'★ 주시':'관찰'}</span></td>
+    </tr>`;
+  }).join('');
+  document.getElementById('vol-cnt').textContent=VOL_DATA.length+'개';
+}
+
+// ═══════════════════════════════════════════════════════
+// 갭매매 (현현/현선/선선)
+// ═══════════════════════════════════════════════════════
+function setGapType(t){
+  gapType=t;
+  ['hh','hs','ss'].forEach(x=>{ document.getElementById('gap-'+x).classList.toggle('on',x===t); document.getElementById('gap-'+x+'-panel').style.display=x===t?'block':'none'; });
+  renderGap();
+}
+function renderGap(){
   if(!isLoaded) return;
-  const min = parseFloat(document.getElementById('fund-min').value)||0;
-  const search = (document.getElementById('fund-search')?.value||'').toUpperCase();
+  if(gapType==='hh') renderHH();
+  else if(gapType==='hs') renderHS();
+  else renderSS();
+}
 
-  let rows = Object.entries(mkt).filter(([c,d]) => {
-    if(search && !c.includes(search)) return false;
-    if(!d.usd.binance || !d.futures.binance) return false;
-    return true;
-  }).map(([c,d]) => {
-    const basis = ((d.futures.binance/d.usd.binance)-1)*100;
-    const ann = basis*12;
-    const fund = d.funding.binance||0;
-    const byfund = d.funding.bybit||0;
-    return {c,d,basis,ann,fund,byfund};
-  }).filter(r => Math.abs(r.ann) >= min);
+function renderHH(){
+  const min=parseFloat(document.getElementById('gap-min').value)||0;
+  const q=(document.getElementById('gap-q')?.value||'').toUpperCase();
+  const exList=['upbit','bithumb','binance','okx','bybit','gateio','mexc'];
+  let rows=Object.entries(mkt).filter(([c])=>!q||c.includes(q)).map(([c,d])=>{
+    const ps={upbit:d.krw.upbit?d.krw.upbit/usdKrw:null,bithumb:d.krw.bithumb?d.krw.bithumb/usdKrw:null,binance:d.usd.binance,okx:d.usd.okx,bybit:d.usd.bybit,gateio:d.usd.gateio,mexc:d.usd.mexc};
+    const vals=Object.values(ps).filter(Boolean);
+    if(vals.length<2) return null;
+    const maxG=((Math.max(...vals)/Math.min(...vals))-1)*100;
+    if(maxG<min) return null;
+    return{c,d,ps,maxG};
+  }).filter(Boolean);
+  const {c:sc,a:sa}=sortS.hh;
+  rows.sort((a,b)=>sc===0?(sa?(a.c>b.c?1:-1):(a.c<b.c?1:-1)):(sa?a.maxG-b.maxG:b.maxG-a.maxG));
+  const tot=rows.length, pg=pages.hh, st=(pg-1)*PS, en=Math.min(st+PS,tot);
+  document.getElementById('hh-cnt').textContent=`${tot}개`;
+  document.getElementById('b-gap').textContent=rows.filter(r=>r.maxG>=2).length;
+  document.getElementById('hh-stats').innerHTML=`
+    <div class="sb"><div class="sb-label">최대 현현갭</div><div class="sb-val" style="color:var(--yellow)">${rows[0]?.c||'-'}</div><div class="sb-sub">${rows[0]?rows[0].maxG.toFixed(2)+'%':'-'}</div></div>
+    <div class="sb"><div class="sb-label">2%+ 코인</div><div class="sb-val">${rows.filter(r=>r.maxG>=2).length}개</div><div class="sb-sub">현현갭 2% 이상</div></div>
+    <div class="sb"><div class="sb-label">0.5%+ 코인</div><div class="sb-val">${rows.filter(r=>r.maxG>=0.5).length}개</div><div class="sb-sub">모니터링 대상</div></div>
+  `;
+  const base=rows[0]?.ps?.binance;
+  document.getElementById('hh-body').innerHTML=rows.slice(st,en).map(({c,d,ps,maxG})=>{
+    const refP=ps.binance||ps.okx||ps.bybit;
+    const cells=exList.map(ex=>{
+      let p,label;
+      if(ex==='upbit'){p=ps.upbit;label=fkrw(d.krw.upbit);}
+      else if(ex==='bithumb'){p=ps.bithumb;label=fkrw(d.krw.bithumb);}
+      else{p=ps[ex];label=fp(p);}
+      if(!p) return `<td class="r"><span class="na">-</span></td>`;
+      const g=refP&&p!==refP?((p/refP)-1)*100:null;
+      return `<td class="r"><div class="pv">${label}</div>${g!==null?gb(g)+gbar_(g):''}</td>`;
+    });
+    return `<tr><td><div class="cc"><div class="ci">${c.slice(0,2)}</div><div class="cn">${c}</div></div></td>${cells.join('')}<td class="r"><div class="pv" style="color:${maxG>=5?'var(--red)':maxG>=2?'var(--yellow)':'var(--green)'}">${maxG.toFixed(2)}%</div></td><td class="c">${sig(maxG)}</td></tr>`;
+  }).join('');
+  renderPg('hh',pg,Math.ceil(tot/PS));
+}
 
-  const {col,asc} = sortState.fund;
-  rows.sort((a,b) => {
-    if(col===0) return asc?(a.c>b.c?1:-1):(a.c<b.c?1:-1);
-    if(col===3) return asc?a.fund-b.fund:b.fund-a.fund;
-    if(col===4) return asc?a.byfund-b.byfund:b.byfund-a.byfund;
-    if(col===5) return asc?a.basis-b.basis:b.basis-a.basis;
-    if(col===6) return asc?a.ann-b.ann:b.ann-a.ann;
+function renderHS(){
+  const min=parseFloat(document.getElementById('gap-min').value)||0;
+  const q=(document.getElementById('gap-q')?.value||'').toUpperCase();
+  let rows=Object.entries(mkt).filter(([c,d])=>(!q||c.includes(q))&&d.usd.binance&&d.fut.binance).map(([c,d])=>{
+    const basis=((d.fut.binance/d.usd.binance)-1)*100;
+    const ann=basis*12;
+    if(Math.abs(ann)<min) return null;
+    return{c,d,basis,ann,fund:d.fund.binance||0};
+  }).filter(Boolean);
+  const {c:sc,a:sa}=sortS.hs;
+  rows.sort((a,b)=>sc===0?(sa?(a.c>b.c?1:-1):(a.c<b.c?1:-1)):sc===4?(sa?a.basis-b.basis:b.basis-a.basis):sc===5?(sa?a.ann-b.ann:b.ann-a.ann):(sa?a.fund-b.fund:b.fund-a.fund));
+  const tot=rows.length, pg=pages.hs, st=(pg-1)*PS, en=Math.min(st+PS,tot);
+  document.getElementById('hs-cnt').textContent=`${tot}개`;
+  document.getElementById('hs-stats').innerHTML=`
+    <div class="sb"><div class="sb-label">최대 베이시스</div><div class="sb-val" style="color:var(--green)">${rows[0]?.c||'-'}</div><div class="sb-sub">${rows[0]?'+'+rows[0].basis.toFixed(3)+'%':'-'}</div></div>
+    <div class="sb"><div class="sb-label">캐리 기회(연5%+)</div><div class="sb-val">${rows.filter(r=>r.ann>=5).length}개</div><div class="sb-sub">현물매수+선물숏</div></div>
+    <div class="sb"><div class="sb-label">역베이시스</div><div class="sb-val" style="color:var(--blue)">${rows.filter(r=>r.basis<0).length}개</div><div class="sb-sub">선물 < 현물</div></div>
+  `;
+  document.getElementById('hs-body').innerHTML=rows.slice(st,en).map(({c,d,basis,ann,fund})=>{
+    const st_=ann>=5?'<span class="badge bg">캐시앤캐리</span>':ann<=-3?'<span class="badge bb">역캐리</span>':'<span class="badge bn">중립</span>';
+    return `<tr>
+      <td><div class="cc"><div class="ci">${c.slice(0,2)}</div><div class="cn">${c}</div></div></td>
+      <td class="r"><div class="pv">${fp(d.usd.binance)}</div></td>
+      <td class="r"><div class="pv">${fp(d.fut.binance)}</div></td>
+      <td class="r"><div class="pv">${fp(d.fut.bybit)||'-'}</div>${d.fut.bybit?`<div class="psub">${(((d.fut.bybit/d.usd.binance)-1)*100).toFixed(3)}%</div>`:''}</td>
+      <td class="r"><div class="pv">${fp(d.fut.okx)||'-'}</div>${d.fut.okx?`<div class="psub">${(((d.fut.okx/d.usd.binance)-1)*100).toFixed(3)}%</div>`:''}</td>
+      <td class="r">${gb(basis)}${gbar_(basis)}</td>
+      <td class="r"><div class="pv" style="color:${ann>=10?'var(--green)':ann>=5?'var(--yellow)':ann<0?'var(--blue)':'var(--text2)'}">${ann.toFixed(1)}%</div></td>
+      <td class="r"><span class="badge ${fund>=0.02?'by':fund<0?'bb':'bn'}">${fund>=0?'+':''}${fund.toFixed(4)}%</span></td>
+      <td class="c">${st_}</td>
+    </tr>`;
+  }).join('');
+  renderPg('hs',pg,Math.ceil(tot/PS));
+}
+
+function renderSS(){
+  const min=parseFloat(document.getElementById('gap-min').value)||0;
+  const q=(document.getElementById('gap-q')?.value||'').toUpperCase();
+  let rows=Object.entries(mkt).filter(([c])=>!q||c.includes(q)).map(([c,d])=>{
+    const ps=[d.fut.binance,d.fut.bybit,d.fut.okx,d.fut.gateio].filter(Boolean);
+    if(ps.length<2) return null;
+    const maxG=((Math.max(...ps)/Math.min(...ps))-1)*100;
+    if(maxG<min) return null;
+    return{c,d,bf:d.fut.binance,byf:d.fut.bybit,okf:d.fut.okx,gf:d.fut.gateio,maxG};
+  }).filter(Boolean);
+  const {c:sc,a:sa}=sortS.ss;
+  rows.sort((a,b)=>sc===0?(sa?(a.c>b.c?1:-1):(a.c<b.c?1:-1)):(sa?a.maxG-b.maxG:b.maxG-a.maxG));
+  const tot=rows.length, pg=pages.ss, st=(pg-1)*PS, en=Math.min(st+PS,tot);
+  document.getElementById('ss-cnt').textContent=`${tot}개`;
+  document.getElementById('ss-stats').innerHTML=`
+    <div class="sb"><div class="sb-label">최대 선선갭</div><div class="sb-val" style="color:var(--purple)">${rows[0]?.c||'-'}</div><div class="sb-sub">${rows[0]?rows[0].maxG.toFixed(3)+'%':'-'}</div></div>
+    <div class="sb"><div class="sb-label">0.3%+ 코인</div><div class="sb-val">${rows.filter(r=>r.maxG>=0.3).length}개</div><div class="sb-sub">선선갭 기회</div></div>
+    <div class="sb"><div class="sb-label">1%+ 코인</div><div class="sb-val">${rows.filter(r=>r.maxG>=1).length}개</div><div class="sb-sub">대형 선선갭</div></div>
+  `;
+  document.getElementById('ss-body').innerHTML=rows.slice(st,en).map(({c,d,bf,byf,okf,gf,maxG})=>{
+    const ref=bf||byf||okf||gf;
+    const cell=(p)=>p?`<td class="r"><div class="pv">${fp(p)}</div>${ref&&p!==ref?gb(((p/ref)-1)*100)+gbar_(((p/ref)-1)*100):''}</td>`:`<td class="r"><span class="na">-</span></td>`;
+    return `<tr><td><div class="cc"><div class="ci">${c.slice(0,2)}</div><div class="cn">${c}</div></div></td>${cell(bf)}${cell(byf)}${cell(okf)}${cell(gf)}<td class="r"><div class="pv" style="color:${maxG>=2?'var(--yellow)':maxG>=0.5?'var(--green)':'var(--purple)'}">${maxG.toFixed(3)}%</div></td><td class="c">${maxG>=1?'<span class="badge bp">★ 갭기회</span>':'<span class="badge bn">-</span>'}</td></tr>`;
+  }).join('');
+  renderPg('ss',pg,Math.ceil(tot/PS));
+}
+
+// ═══════════════════════════════════════════════════════
+// 펀비매매
+// ═══════════════════════════════════════════════════════
+function renderFund(){
+  if(!isLoaded) return;
+  const min=parseFloat(document.getElementById('fund-min').value)||0;
+  const q=(document.getElementById('fund-q')?.value||'').toUpperCase();
+  let rows=Object.entries(mkt).filter(([c,d])=>(!q||c.includes(q))&&d.usd.binance&&d.fut.binance).map(([c,d])=>{
+    const basis=((d.fut.binance/d.usd.binance)-1)*100;
+    const ann=basis*12, fund=d.fund.binance||0, byfund=d.fund.bybit||0;
+    const fundAnn=fund*3*365;
+    if(Math.abs(ann)<min&&Math.abs(fundAnn)<min) return null;
+    return{c,d,basis,ann,fund,byfund,fundAnn};
+  }).filter(Boolean);
+  rows.sort((a,b)=>fundSort==='fund'?(b.fund-a.fund):(b.ann-a.ann));
+  const {c:sc,a:sa}=sortS.fund;
+  rows.sort((a,b)=>{
+    if(sc===0) return sa?(a.c>b.c?1:-1):(a.c<b.c?1:-1);
+    if(sc===3) return sa?a.fund-b.fund:b.fund-a.fund;
+    if(sc===4) return sa?a.byfund-b.byfund:b.byfund-a.byfund;
+    if(sc===5) return sa?a.basis-b.basis:b.basis-a.basis;
+    if(sc===6) return sa?a.ann-b.ann:b.ann-a.ann;
+    if(sc===7) return sa?a.fundAnn-b.fundAnn:b.fundAnn-a.fundAnn;
     return 0;
   });
-
-  const total = rows.length;
-  const page = pages.fund;
-  const start = (page-1)*PAGE_SIZE, end = Math.min(start+PAGE_SIZE, total);
-  const pageRows = rows.slice(start, end);
-
-  document.getElementById('fund-count').textContent = `${total}개`;
-  document.getElementById('badge-fund').textContent = rows.filter(r=>r.ann>=10).length;
-  const maxFund = rows.reduce((m,r)=>r.fund>m.v?{c:r.c,v:r.fund}:m,{c:'-',v:-99});
-  document.getElementById('fd-max').textContent = maxFund.c!=='-'?`${maxFund.c} +${maxFund.v.toFixed(4)}%`:'-';
-  const maxAnn = rows.reduce((m,r)=>r.ann>m?r.ann:m,-99);
-  document.getElementById('fd-ann').textContent = maxAnn>-99?maxAnn.toFixed(1)+'%':'-';
-  document.getElementById('fd-opp').textContent = rows.filter(r=>r.ann>=10).length+'개';
-  document.getElementById('fd-neg').textContent = rows.filter(r=>r.fund<0).length+'개';
-
-  const tbody = document.getElementById('fund-tbody');
-  tbody.innerHTML = pageRows.map(({c,d,basis,ann,fund,byfund}) => {
-    const fc = f => f>=0.02?'by':f<0?'bb':'bn';
-    const strategy = ann>=5?'<span class="badge bg">캐리 매수</span>':ann<=-3?'<span class="badge bb">역캐리</span>':'<span class="badge bn">중립</span>';
-    return `<tr>
-      <td><div class="coin-cell"><div class="coin-icon">${c.slice(0,2)}</div><div class="cn">${c}</div></div></td>
-      <td class="r"><div class="pv">${fp(d.usd.binance)}</div></td>
-      <td class="r"><div class="pv">${fp(d.futures.binance)}</div></td>
-      <td class="r"><span class="badge ${fc(fund)}">${fund>=0?'+':''}${fund.toFixed(4)}%</span></td>
-      <td class="r"><span class="badge ${fc(byfund)}">${byfund>=0?'+':''}${byfund.toFixed(4)}%</span></td>
-      <td class="r">${gapBadge(basis)}${gbar(basis)}</td>
-      <td class="r"><div class="pv" style="color:${ann>=10?'#00e676':ann>=5?'#ffd600':ann<0?'#3d8eff':'#8888a8'}">${ann.toFixed(1)}%</div></td>
-      <td class="c">${strategy}</td>
-    </tr>`;
-  }).join('');
-
-  renderPagination('fund', page, Math.ceil(total/PAGE_SIZE));
-}
-
-// ============================================================
-// 전체 아비트라지 렌더
-// ============================================================
-function renderArb() {
-  if(!isLoaded) return;
-  const search = (document.getElementById('arb-search')?.value||'').toUpperCase();
-  const minGap = parseFloat(document.getElementById('arb-min')?.value)||0;
-  const exList = ['upbit','bithumb','binance','okx','bybit','gateio','mexc'];
-
-  let rows = Object.entries(mkt).filter(([c]) => !search||c.includes(search)).map(([c,d]) => {
-    const prices = {
-      upbit: d.krw.upbit ? d.krw.upbit/usdKrw : null,
-      bithumb: d.krw.bithumb ? d.krw.bithumb/usdKrw : null,
-      binance: d.usd.binance, okx: d.usd.okx, bybit: d.usd.bybit, gateio: d.usd.gateio, mexc: d.usd.mexc
-    };
-    const validP = Object.values(prices).filter(Boolean);
-    const maxG = validP.length>=2 ? ((Math.max(...validP)/Math.min(...validP))-1)*100 : 0;
-    return {c,d,prices,maxG};
-  }).filter(r => r.maxG >= minGap);
-
-  if(arbSort==='gap') rows.sort((a,b)=>b.maxG-a.maxG);
-  else if(arbSort==='price') rows.sort((a,b)=>(b.prices.binance||0)-(a.prices.binance||0));
-  else rows.sort((a,b)=>a.c>b.c?1:-1);
-
-  const total = rows.length;
-  const page = pages.arb;
-  const start = (page-1)*PAGE_SIZE, end = Math.min(start+PAGE_SIZE, total);
-  const pageRows = rows.slice(start, end);
-
-  document.getElementById('arb-count').textContent = `${total}개 (${start+1}-${end})`;
-
-  // 요약
-  const sg = document.getElementById('arb-stats');
-  if(sg) sg.innerHTML = `
-    <div class="sc ${rows[0]?.maxG>=2?'hot':''}"><div class="sl">최대 갭 코인</div><div class="sv" style="color:${rows[0]?.maxG>=5?'var(--red)':'var(--yellow)'}">${rows[0]?.c||'-'}</div><div class="ss">${rows[0]?rows[0].maxG.toFixed(2)+'%':'-'}</div></div>
-    <div class="sc"><div class="sl">갭 2%+ 코인</div><div class="sv">${rows.filter(r=>r.maxG>=2).length}개</div><div class="ss">현물간 갭 2% 이상</div></div>
-    <div class="sc"><div class="sl">갭 0.5%+ 코인</div><div class="sv">${rows.filter(r=>r.maxG>=0.5).length}개</div><div class="ss">모니터링 대상</div></div>
-    <div class="sc"><div class="sl">총 모니터링</div><div class="sv">${Object.keys(mkt).length}개</div><div class="ss">업비트+빗썸 전체</div></div>
+  const tot=rows.length, pg=pages.fund, st_=(pg-1)*PS, en=Math.min(st_+PS,tot);
+  document.getElementById('fund-cnt').textContent=`${tot}개`;
+  document.getElementById('b-fund').textContent=rows.filter(r=>r.ann>=10||r.fundAnn>=10).length;
+  const maxF=rows.reduce((m,r)=>r.fund>m.v?{c:r.c,v:r.fund}:m,{c:'-',v:-99});
+  document.getElementById('fund-stats').innerHTML=`
+    <div class="sb"><div class="sb-label">최고 펀딩비</div><div class="sb-val" style="color:var(--green)">${maxF.c!=='-'?'+'+maxF.v.toFixed(4)+'%':'-'}</div><div class="sb-sub">${maxF.c}</div></div>
+    <div class="sb"><div class="sb-label">연환산 10%+ 코인</div><div class="sb-val" style="color:var(--yellow)">${rows.filter(r=>r.ann>=10).length}개</div><div class="sb-sub">캐리 전략 추천</div></div>
+    <div class="sb"><div class="sb-label">음수 펀딩비</div><div class="sb-val" style="color:var(--blue)">${rows.filter(r=>r.fund<0).length}개</div><div class="sb-sub">역캐리 기회</div></div>
+    <div class="sb"><div class="sb-label">펀비 연환산 10%+</div><div class="sb-val" style="color:var(--purple)">${rows.filter(r=>r.fundAnn>=10).length}개</div><div class="sb-sub">펀딩비 수익 기회</div></div>
   `;
-
-  const tbody = document.getElementById('arb-tbody');
-  tbody.innerHTML = pageRows.map(({c,d,prices,maxG}) => {
-    const base = prices.binance || prices.upbit || prices.okx;
-    const cells = exList.map(ex => {
-      let p, label;
-      if(ex==='upbit') { p = prices.upbit; label = fpKRW(d.krw.upbit); }
-      else if(ex==='bithumb') { p = prices.bithumb; label = fpKRW(d.krw.bithumb); }
-      else { p = prices[ex]; label = fp(p); }
-      if(!p) return `<td class="r"><span class="na">-</span></td>`;
-      const g = base&&p!==base ? ((p/base)-1)*100 : null;
-      return `<td class="r"><div class="pv">${label}</div>${g!==null?gapBadge(g)+''+gbar(g):''}</td>`;
-    });
+  const fc=f=>f>=0.02?'by':f<0?'bb':'bn';
+  document.getElementById('fund-body').innerHTML=rows.slice(st_,en).map(({c,d,basis,ann,fund,byfund,fundAnn})=>{
+    const st__=ann>=5?'<span class="badge bg">캐리매수</span>':ann<=-3?'<span class="badge bb">역캐리</span>':'<span class="badge bn">중립</span>';
+    const fw=f=>Math.min(Math.abs(f)/0.05*100,100);
+    const fclr=f=>f>0?'var(--green)':f<0?'var(--red)':'var(--text3)';
     return `<tr>
-      <td><div class="coin-cell"><div class="coin-icon">${c.slice(0,2)}</div><div><div class="cn">${c}</div><div class="cs">${d.inUpbit?'업비트 ':''} ${d.inBithumb?'빗썸':''}</div></div></div></td>
-      ${cells.join('')}
-      <td class="r"><div class="pv" style="color:${maxG>=5?'var(--red)':maxG>=2?'var(--yellow)':maxG>=0.5?'var(--green)':'var(--text3)'}">${maxG.toFixed(2)}%</div></td>
+      <td><div class="cc"><div class="ci">${c.slice(0,2)}</div><div class="cn">${c}</div></div></td>
+      <td class="r"><div class="pv">${fp(d.usd.binance)}</div></td>
+      <td class="r"><div class="pv">${fp(d.fut.binance)}</div></td>
+      <td class="r"><div class="pv" style="color:${fclr(fund)}">${fund>=0?'+':''}${fund.toFixed(4)}%</div><div class="fbar-mini"><div class="fbmini-bg"><div class="fbmini-fill" style="width:${fw(fund).toFixed(0)}%;background:${fclr(fund)};"></div></div></div></td>
+      <td class="r"><div class="pv" style="color:${fclr(byfund)}">${byfund>=0?'+':''}${byfund.toFixed(4)}%</div></td>
+      <td class="r">${gb(basis)}${gbar_(basis)}</td>
+      <td class="r"><div class="pv" style="color:${ann>=10?'var(--green)':ann>=5?'var(--yellow)':ann<0?'var(--blue)':'var(--text2)'}">${ann.toFixed(1)}%</div></td>
+      <td class="r"><div class="pv" style="color:${fundAnn>=10?'var(--green)':fundAnn>=5?'var(--yellow)':fundAnn<0?'var(--blue)':'var(--text2)'}">${fundAnn.toFixed(1)}%</div></td>
+      <td class="c">${st__}</td>
     </tr>`;
   }).join('');
-
-  renderPagination('arb', page, Math.ceil(total/PAGE_SIZE));
+  renderPg('fund',pg,Math.ceil(tot/PS));
 }
 
-// ============================================================
+// ═══════════════════════════════════════════════════════
+// 전체비교
+// ═══════════════════════════════════════════════════════
+function renderAll(){
+  if(!isLoaded) return;
+  const q=(document.getElementById('all-q')?.value||'').toUpperCase();
+  const minG=parseFloat(document.getElementById('all-min')?.value)||0;
+  const exList=['upbit','bithumb','binance','okx','bybit','gateio','mexc'];
+  let rows=Object.entries(mkt).filter(([c])=>!q||c.includes(q)).map(([c,d])=>{
+    const ps={upbit:d.krw.upbit?d.krw.upbit/usdKrw:null,bithumb:d.krw.bithumb?d.krw.bithumb/usdKrw:null,binance:d.usd.binance,okx:d.usd.okx,bybit:d.usd.bybit,gateio:d.usd.gateio,mexc:d.usd.mexc};
+    const vals=Object.values(ps).filter(Boolean);
+    const maxG=vals.length>=2?((Math.max(...vals)/Math.min(...vals))-1)*100:0;
+    if(maxG<minG) return null;
+    return{c,d,ps,maxG};
+  }).filter(Boolean);
+  if(allSort==='gap') rows.sort((a,b)=>b.maxG-a.maxG);
+  else if(allSort==='price') rows.sort((a,b)=>(b.ps.binance||0)-(a.ps.binance||0));
+  else rows.sort((a,b)=>a.c>b.c?1:-1);
+  const tot=rows.length, pg=pages.all, st=(pg-1)*PS, en=Math.min(st+PS,tot);
+  document.getElementById('all-cnt').textContent=`${tot}개 (${st+1}-${en})`;
+  const tbody=document.getElementById('all-body');
+  tbody.innerHTML=rows.slice(st,en).map(({c,d,ps,maxG})=>{
+    const ref=ps.binance||ps.okx||ps.bybit;
+    const cells=exList.map(ex=>{
+      let p,label;
+      if(ex==='upbit'){p=ps.upbit;label=fkrw(d.krw.upbit);}
+      else if(ex==='bithumb'){p=ps.bithumb;label=fkrw(d.krw.bithumb);}
+      else{p=ps[ex];label=fp(p);}
+      if(!p) return `<td class="r"><span class="na">-</span></td>`;
+      const g=ref&&p!==ref?((p/ref)-1)*100:null;
+      return `<td class="r"><div class="pv">${label}</div>${g!==null&&Math.abs(g)>=0.1?gb(g)+gbar_(g):''}</td>`;
+    });
+    return `<tr><td><div class="cc"><div class="ci">${c.slice(0,2)}</div><div><div class="cn">${c}</div><div class="csub">${d.inUp?'업':''}${d.inBt?'빗':''}</div></div></div></td>${cells.join('')}<td class="r"><div class="pv" style="color:${maxG>=5?'var(--red)':maxG>=2?'var(--yellow)':maxG>=0.5?'var(--green)':'var(--text3)'}">${maxG.toFixed(2)}%</div></td></tr>`;
+  }).join('');
+  renderPg('all',pg,Math.ceil(tot/PS));
+}
+
+// ═══════════════════════════════════════════════════════
+// 경보
+// ═══════════════════════════════════════════════════════
+function checkAlerts(){
+  const hot=Object.entries(mkt).filter(([,d])=>d.krw.upbit&&d.usd.binance&&Math.abs(((d.krw.upbit/usdKrw/d.usd.binance)-1)*100)>=4).map(([c,d])=>{const k=((d.krw.upbit/usdKrw/d.usd.binance)-1)*100;return`${c}(${k>=0?'+':''}${k.toFixed(1)}%)`;});
+  const ab=document.getElementById('alert-kimp');
+  if(hot.length){ab.classList.remove('hidden');document.getElementById('alert-kimp-txt').textContent=`김프 4%+ 발생: ${hot.join(', ')} — 즉시 확인!`;}else ab.classList.add('hidden');
+  const pendingCoins=LISTING.filter(d=>d.st==='pending').map(d=>d.coin);
+  const lb=document.getElementById('alert-listing');
+  if(pendingCoins.length){lb.classList.remove('hidden');document.getElementById('alert-listing-txt').textContent=`원상따리 대기: ${pendingCoins.join(', ')} — 상장 임박!`;}else lb.classList.add('hidden');
+}
+
+// ═══════════════════════════════════════════════════════
 // 페이지네이션
-// ============================================================
-function renderPagination(type, current, total) {
-  const id = type+'-pagination';
-  const el = document.getElementById(id);
-  if(!el) return;
-  if(total<=1) { el.style.display='none'; return; }
-  el.style.display = 'flex';
-  const maxShow = 7;
-  let btns = '';
-  btns += `<button class="pg-btn" onclick="goPage('${type}',${current-1})" ${current<=1?'disabled':''}>◀</button>`;
-  let start = Math.max(1, current-3), end = Math.min(total, start+maxShow-1);
-  if(end-start<maxShow-1) start = Math.max(1, end-maxShow+1);
-  if(start>1) btns += `<button class="pg-btn" onclick="goPage('${type}',1)">1</button>${start>2?'<span class="pg-info">...</span>':''}`;
-  for(let i=start;i<=end;i++) btns += `<button class="pg-btn ${i===current?'active':''}" onclick="goPage('${type}',${i})">${i}</button>`;
-  if(end<total) btns += `${end<total-1?'<span class="pg-info">...</span>':''}<button class="pg-btn" onclick="goPage('${type}',${total})">${total}</button>`;
-  btns += `<button class="pg-btn" onclick="goPage('${type}',${current+1})" ${current>=total?'disabled':''}>▶</button>`;
-  btns += `<span class="pg-info">${current}/${total}페이지 (${PAGE_SIZE}개씩)</span>`;
-  el.innerHTML = btns;
+// ═══════════════════════════════════════════════════════
+function renderPg(type, cur_, tot){
+  const el=document.getElementById(type+'-pg'); if(!el) return;
+  if(tot<=1){el.innerHTML='';return;}
+  const max=7; let s=Math.max(1,cur_-3), e=Math.min(tot,s+max-1);
+  if(e-s<max-1) s=Math.max(1,e-max+1);
+  let h=`<button class="pg-btn" onclick="gp('${type}',${cur_-1})" ${cur_<=1?'disabled':''}>◀</button>`;
+  if(s>1) h+=`<button class="pg-btn" onclick="gp('${type}',1)">1</button>${s>2?'<span class="pg-info">…</span>':''}`;
+  for(let i=s;i<=e;i++) h+=`<button class="pg-btn ${i===cur_?'on':''}" onclick="gp('${type}',${i})">${i}</button>`;
+  if(e<tot) h+=`${e<tot-1?'<span class="pg-info">…</span>':''}<button class="pg-btn" onclick="gp('${type}',${tot})">${tot}</button>`;
+  h+=`<button class="pg-btn" onclick="gp('${type}',${cur_+1})" ${cur_>=tot?'disabled':''}>▶</button>`;
+  h+=`<span class="pg-info">${cur_}/${tot}p · ${PS}개씩</span>`;
+  el.innerHTML=h;
 }
-function goPage(type, page) {
-  const maxRows = type==='kimp'?getKimpData().length:Object.keys(mkt).length;
-  const maxPage = Math.ceil(maxRows/PAGE_SIZE);
-  pages[type] = Math.max(1, Math.min(page, maxPage));
-  if(type==='kimp') renderKimp();
-  else if(type==='fund') renderFunding();
-  else renderArb();
-  window.scrollTo(0, 0);
-}
+function gp(type,p){const maxRows=Object.keys(mkt).length;const maxP=Math.ceil(maxRows/PS);pages[type]=Math.max(1,Math.min(p,maxP));if(type==='kimp')renderKimp();else if(type==='fund')renderFund();else if(type==='hh')renderHH();else if(type==='hs')renderHS();else if(type==='ss')renderSS();else renderAll();window.scrollTo(0,0);}
 
-// ============================================================
-// 알림
-// ============================================================
-function checkAlerts() {
-  const hot = Object.entries(mkt).filter(([,d]) => {
-    if(!d.krw.upbit || !d.usd.binance) return false;
-    return Math.abs(((d.krw.upbit/usdKrw/d.usd.binance)-1)*100) >= 4;
-  }).map(([c,d]) => {
-    const k = ((d.krw.upbit/usdKrw/d.usd.binance)-1)*100;
-    return `${c}(${k>=0?'+':''}${k.toFixed(1)}%)`;
-  });
-  const bar = document.getElementById('alert-bar');
-  if(hot.length) {
-    bar.classList.remove('hidden');
-    document.getElementById('alert-text').textContent = `김프 4%+ 발생: ${hot.join(', ')}`;
-  } else bar.classList.add('hidden');
-}
-
-// ============================================================
+// ═══════════════════════════════════════════════════════
 // UI 유틸
-// ============================================================
-function sw(n) {
-  const ns = ['kimp','funding','arb','ai'];
-  document.querySelectorAll('.nav-tab').forEach((t,i) => t.classList.toggle('active', ns[i]===n));
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById(`tab-${n}`).classList.add('active');
+// ═══════════════════════════════════════════════════════
+function sw(n){
+  const ns=['kimp','listing','gap','funding','all','ai'];
+  document.querySelectorAll('.ntab').forEach((t,i)=>t.classList.toggle('on',ns[i]===n));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('on'));
+  document.getElementById('tab-'+n).classList.add('on');
+  if(n==='listing') renderListing();
 }
-function setBaseEx(ex) {
-  baseEx = ex;
-  ['upbit','bithumb','coinone'].forEach(e => {
-    const el = document.getElementById('ex-'+e);
-    if(el) el.classList.toggle('active', e===ex);
-  });
+function setBase(ex){
+  baseEx=ex;
+  ['upbit','bithumb','coinone'].forEach(e=>{const el=document.getElementById('bex-'+e);if(el)el.classList.toggle('on',e===ex);});
   if(isLoaded) renderKimp();
 }
-function toggleCmpEx(btn, ex) {
-  btn.classList.toggle('active');
-  if(cmpExSet.has(ex)) cmpExSet.delete(ex); else cmpExSet.add(ex);
-  if(isLoaded) renderKimp();
-}
-function sortT(type, col) {
-  if(sortState[type].col===col) sortState[type].asc = !sortState[type].asc;
-  else { sortState[type].col=col; sortState[type].asc=false; }
-  pages[type] = 1;
-  if(type==='kimp') renderKimp();
-  else renderFunding();
-}
-function setAS(s) {
-  arbSort = s;
-  ['gap','price','name'].forEach(x => {
-    const el = document.getElementById('arb-s-'+x);
-    if(el) el.classList.toggle('active', x===s);
-  });
-  pages.arb = 1;
-  renderArb();
-}
+function togCmp(btn,ex){btn.classList.toggle('on');if(cmpExSet.has(ex))cmpExSet.delete(ex);else cmpExSet.add(ex);if(isLoaded)renderKimp();}
+function srt(type,col){if(sortS[type].c===col)sortS[type].a=!sortS[type].a;else{sortS[type].c=col;sortS[type].a=false;}pages[type]=1;if(type==='kimp')renderKimp();else if(type==='hh')renderHH();else if(type==='hs')renderHS();else if(type==='ss')renderSS();else renderFund();}
+function setAS(s){allSort=s;['gap','price','name'].forEach(x=>{const el=document.getElementById('as-'+x);if(el)el.classList.toggle('on',x===s);});pages.all=1;renderAll();}
+function togFundSort(btn,s){fundSort=s;document.querySelectorAll('#tab-funding .fbar .fb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');sortS.fund={c:s==='fund'?3:6,a:false};renderFund();}
 
-// ============================================================
+// ═══════════════════════════════════════════════════════
 // AI 비서
-// ============================================================
-async function askAI() {
-  const inp = document.getElementById('ai-inp');
-  const q = inp.value.trim(); if(!q) return;
-  inp.value = '';
-  const box = document.getElementById('ac');
-  box.innerHTML += `<div class="amu">${q}</div>`;
-  const ld = document.createElement('div'); ld.className='aml'; ld.textContent='분석 중...'; box.appendChild(ld);
-  box.scrollTop = box.scrollHeight;
-
-  const topGaps = Object.entries(mkt).map(([c,d]) => {
-    const krwUSD = d.krw.upbit ? d.krw.upbit/usdKrw : null;
-    const binance = d.usd.binance;
-    const kimp = krwUSD && binance ? ((krwUSD/binance)-1)*100 : null;
-    const basis = d.usd.binance && d.futures.binance ? ((d.futures.binance/d.usd.binance)-1)*100 : 0;
-    return {c, kimp, basis, fund: d.funding?.binance||0};
+// ═══════════════════════════════════════════════════════
+async function askAI(){
+  const inp=document.getElementById('ai-inp');
+  const q=inp.value.trim();if(!q)return;inp.value='';
+  const box=document.getElementById('ac');
+  box.innerHTML+=`<div class="amu">${q}</div>`;
+  const ld=document.createElement('div');ld.className='aml';ld.textContent='분석 중...';box.appendChild(ld);box.scrollTop=box.scrollHeight;
+  const top=Object.entries(mkt).map(([c,d])=>{
+    const kimp=d.krw.upbit&&d.usd.binance?((d.krw.upbit/usdKrw/d.usd.binance)-1)*100:null;
+    const basis=d.usd.binance&&d.fut.binance?((d.fut.binance/d.usd.binance)-1)*100:0;
+    return{c,kimp,basis,fund:d.fund?.binance||0};
   }).filter(r=>r.kimp!==null).sort((a,b)=>Math.abs(b.kimp)-Math.abs(a.kimp)).slice(0,10);
-
-  const ctx = topGaps.map(r=>`${r.c}: 김프${r.kimp.toFixed(2)}%, 베이시스${r.basis.toFixed(3)}%, 펀딩비${r.fund.toFixed(4)}%`).join('\n');
-  const totalCoins = Object.keys(mkt).length;
-  const opp2 = topGaps.filter(r=>r.kimp>=2).length;
-
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
-      model: 'claude-sonnet-4-20250514', max_tokens: 1000,
-      system: `당신은 코인 아비트라지 전문 AI 비서입니다.\n현재 업비트+빗썸 상장 ${totalCoins}개 코인 모니터링 중.\n김프 2%+ 기회: ${opp2}개\n상위 김프 코인:\n${ctx}\nUSD/KRW: ₩${Math.round(usdKrw).toLocaleString()}\n한국어로 간결하고 실용적으로 답변하세요. 투자 리스크 반드시 언급.`,
-      messages: [{role:'user',content:q}]
-    })});
-    const data = await res.json(); ld.remove();
-    box.innerHTML += `<div class="amb">${(data.content?.[0]?.text||'응답 오류').replace(/\n/g,'<br>')}</div>`;
-    box.scrollTop = box.scrollHeight;
-  } catch(e) { ld.textContent = '연결 오류. 잠시 후 다시 시도하세요.'; }
+  const ctx=top.map(r=>`${r.c}: 김프${r.kimp.toFixed(2)}%, 베이시스${r.basis.toFixed(3)}%, 펀딩비${r.fund.toFixed(4)}%`).join('\n');
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:`당신은 코인 아비트라지 전문 AI 비서입니다. 현재 ${Object.keys(mkt).length}개 코인 모니터링 중.\n상위 김프 코인:\n${ctx}\nUSD/KRW: ₩${Math.round(usdKrw).toLocaleString()}\n한국어로 간결하고 실용적으로 답변. 투자 리스크 반드시 언급.`,messages:[{role:'user',content:q}]})});
+    const data=await res.json();ld.remove();
+    box.innerHTML+=`<div class="amb">${(data.content?.[0]?.text||'오류').replace(/\n/g,'<br>')}</div>`;box.scrollTop=box.scrollHeight;
+  }catch(e){ld.textContent='연결 오류.';}
 }
-function qa(q) { document.getElementById('ai-inp').value=q; askAI(); }
-document.getElementById('ai-inp').addEventListener('keydown', e => { if(e.key==='Enter') askAI(); });
+function qa(q){document.getElementById('ai-inp').value=q;askAI();}
+document.getElementById('ai-inp').addEventListener('keydown',e=>{if(e.key==='Enter')askAI();});
 
-// ============================================================
+// ═══════════════════════════════════════════════════════
 // 실행
-// ============================================================
-fetchUSDKRW().then(() => refresh());
-setInterval(() => {
-  cd--;
-  if(cd<=0) { cd=15; refresh(); fetchUSDKRW(); }
-  document.getElementById('fcd').textContent = `다음 갱신: ${cd}s`;
-}, 1000);
+// ═══════════════════════════════════════════════════════
+loadRate().then(()=>refresh());
+setInterval(()=>{cd--;if(cd<=0){cd=15;refresh();loadRate();}document.getElementById('fcd').textContent=`다음 갱신: ${cd}s`;},1000);
 </script>
 </body>
 </html>
